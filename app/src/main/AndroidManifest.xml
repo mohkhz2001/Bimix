@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Bimix">
-        <activity android:name=".Activity.SignUpActivity"></activity>
+        <activity android:name=".Activity.ConfirmPhoneActivity"></activity>
+        <activity android:name=".Activity.SignUpActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.StartUpActivity">
             <intent-filter>
