@@ -11,6 +11,6 @@ public class SplashScreeanConfirmActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screean_confirm);
+        setContentView(R.layout.activity_splash_screan_confirm);
     }
 }
