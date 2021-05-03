@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.SplashScreanConfirmActivity">
+    tools:context=".Activity.SplashScreenConfirmActivity">
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="match_parent"
         android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
         android:layout_height="match_parent"
-        app:lottie_rawRes="@raw/confirm"
+        app:lottie_rawRes="@raw/confirm_animation"
         app:lottie_loop="true"
         app:lottie_autoPlay="true"
         />
