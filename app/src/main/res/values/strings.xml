@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Bimix</string>
+
+    <string name="connection_failed_title">مشکل در برقراری ارتباط</string>
+    <string name="connection_failed_text">مشکل در برقراری ارتباط با سرور. لطفا بعد از اطمینان از اتصال خود به اینترنت دوباره تلاش کنید</string>
+
+    <string name="faileLogin_title">مشکل در ورود</string>
+    <string name="faileLogin_text">نام کاربری یا رمز عبور اشتباه است</string>
+
 </resources>
