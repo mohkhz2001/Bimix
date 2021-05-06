@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.mohammadkz.bimix.ErrorHandler;
+import com.mohammadkz.bimix.StaticFun;
 import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
 
@@ -57,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
                     sendCode();
                     transferData(name.getText().toString(), phoneNumber.getText().toString(), password.getText().toString());
                 } else {
-                    ErrorHandler.alertDialog_connectionFail(SignUpActivity.this);
+                    StaticFun.alertDialog_connectionFail(SignUpActivity.this);
                 }
             }
         });

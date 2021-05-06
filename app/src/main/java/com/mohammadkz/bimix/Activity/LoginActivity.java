@@ -3,7 +3,6 @@ package com.mohammadkz.bimix.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -14,11 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.github.ybq.android.spinkit.SpinKitView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.mohammadkz.bimix.API.ApiConfig;
 import com.mohammadkz.bimix.API.AppConfig;
-import com.mohammadkz.bimix.ErrorHandler;
+import com.mohammadkz.bimix.StaticFun;
 import com.mohammadkz.bimix.Model.LoginResponse;
 import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
@@ -60,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 disActiveLayout();
                 checkUserInput(phoneNumber.getText().toString(), password.getText().toString());
             } else {
-                ErrorHandler.alertDialog_connectionFail(LoginActivity.this);
+                StaticFun.alertDialog_connectionFail(LoginActivity.this);
             }
 
         });
@@ -81,9 +79,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                t.getMessage();
-                ErrorHandler.alertDialog_connectionFail(LoginActivity.this);
-                activeLayout();
+                sharedPreferences(new LoginResponse()); // shouldnt be here
+//                t.getMessage();
+//                ErrorHandler.alertDialog_connectionFail(LoginActivity.this);
+//                activeLayout();
             }
         });
 
@@ -92,9 +91,11 @@ public class LoginActivity extends AppCompatActivity {
     // save user data
     private void sharedPreferences(LoginResponse response) {
 
-        if (response.getCode().equals("1")) {
+        // changed of ==>  response.getCode().equals("1")
+        if (true) {
 
-            User user = new User(response.getID(), response.getAuth(), response.getName(), phoneNumber.getText().toString());
+//            User user = new User(response.getID(), response.getAuth(), response.getName(), phoneNumber.getText().toString());
+            User user = new User("1", "awdamk2985efasd", "محمدمهدی خواجه زاده", "09388209270");
             SharedPreferences sh = getSharedPreferences("user_info", MODE_PRIVATE);
             Gson gson = new Gson();
             String userToTransfer = gson.toJson(user);
@@ -104,12 +105,12 @@ public class LoginActivity extends AppCompatActivity {
             myEdit.commit();
             System.out.println();
 
-            Intent intent = new Intent(LoginActivity.this  , MainPageActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainPageActivity.class);
             startActivity(intent);
             finish();
 
         } else {
-            ErrorHandler.alertDialog_error_login(LoginActivity.this);
+            StaticFun.alertDialog_error_login(LoginActivity.this);
             activeLayout();
         }
 

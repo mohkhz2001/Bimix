@@ -3,7 +3,6 @@ package com.mohammadkz.bimix.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -20,12 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.mohammadkz.bimix.API.ApiConfig;
 import com.mohammadkz.bimix.API.AppConfig;
-import com.mohammadkz.bimix.ErrorHandler;
+import com.mohammadkz.bimix.StaticFun;
 import com.mohammadkz.bimix.Model.LoginResponse;
 import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
@@ -245,7 +243,7 @@ public class ConfirmPhoneActivity extends AppCompatActivity {
                     }
                 }
             } else {
-                ErrorHandler.alertDialog_connectionFail(ConfirmPhoneActivity.this);
+                StaticFun.alertDialog_connectionFail(ConfirmPhoneActivity.this);
                 activeLayout();
             }
 
@@ -302,7 +300,7 @@ public class ConfirmPhoneActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                ErrorHandler.alertDialog_connectionFail(ConfirmPhoneActivity.this);
+                StaticFun.alertDialog_connectionFail(ConfirmPhoneActivity.this);
                 activeLayout();
             }
         });
