@@ -13,4 +13,28 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="MyAppTheme.NumberPicker" parent="MyAppTheme.NumberPicker">
+        <item name="colorControlNormal">#FF9800</item>
+    </style>
+
+    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="colorControlNormal">#666666</item>
+        <item name="colorControlActivated">#FF9800</item>
+        <item name="colorControlHighlight">#FFC107</item>
+    </style>
+
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">#fff</item>
+        <item name="android:textSize">15sp</item>
+
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+
+        <item name="colorAccent">#5F5F5F</item>
+        <item name="colorControlNormal">#e34b1c</item>
+        <item name="colorControlActivated">#e34b1c</item>
+    </style>
+
 </resources>
