@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A28D1"
+    tools:context=".Activity.BodyInsuranceActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_toolbar"
+            app:elevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                app:elevation="0dp">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="بیمه بدنه خودرو"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:elevation="0dp" />
+
+                <ImageView
+                    android:id="@+id/back_nav"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_back" />
+
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/topAppBar"
+                    style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_top_bar"
+                    android:elevation="100dp"
+                    android:scaleX="1.09"
+                    android:scaleY="1.09"
+                    android:visibility="gone"
+                    app:navigationIcon="@drawable/ic_nav"
+                    tools:targetApi="lollipop" />
+            </RelativeLayout>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintEnd_toStartOf="@+id/guideline18"
+        app:layout_constraintStart_toStartOf="@+id/guideline17">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <TextView
+                android:id="@+id/firstInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:enabled="true"
+                android:gravity="center"
+                android:text="اطلاعات \n اولیه"
+                android:textColor="@drawable/level_req"
+                android:textSize="@dimen/level_size_txt"
+                android:textStyle="bold"
+                app:itemTextColor="@drawable/level_req"
+                app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+                app:layout_constraintStart_toStartOf="@+id/guideline17" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="پوشش"
+                android:textColor="@drawable/level_req"
+                android:textSize="@dimen/level_size_txt"
+                android:textStyle="bold"
+                app:itemTextColor="@drawable/level_req"
+                app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+                app:layout_constraintStart_toStartOf="@+id/guideline17" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="تخفیف"
+                android:textColor="@drawable/level_req"
+                android:textSize="@dimen/level_size_txt"
+                android:textStyle="bold"
+                app:itemTextColor="@drawable/level_req"
+                app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+                app:layout_constraintStart_toStartOf="@+id/guideline17" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="بازدید"
+                android:textColor="@drawable/level_req"
+                android:textSize="@dimen/level_size_txt"
+                android:textStyle="bold"
+                app:itemTextColor="@drawable/level_req"
+                app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+                app:layout_constraintStart_toStartOf="@+id/guideline17" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="ارسال \n مدارک"
+                android:textColor="@drawable/level_req"
+                android:textSize="@dimen/level_size_txt"
+                android:textStyle="bold"
+                app:itemTextColor="@drawable/level_req"
+                app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+                app:layout_constraintStart_toStartOf="@+id/guideline17" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="تایید \n اطلاعات"
+                android:textColor="@drawable/level_req"
+                android:textSize="@dimen/level_size_txt"
+                android:textStyle="bold"
+                app:itemTextColor="@drawable/level_req"
+                app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+                app:layout_constraintStart_toStartOf="@+id/guideline17" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="دریافت \n کد رهگیری"
+                android:textColor="@drawable/level_req"
+                android:textSize="@dimen/level_size_txt"
+                android:textStyle="bold"
+                app:itemTextColor="@drawable/level_req"
+                app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+                app:layout_constraintStart_toStartOf="@+id/guideline17" />
+
+        </LinearLayout>
+
+        <com.warkiz.widget.IndicatorSeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="11dp"
+            app:isb_indicator_text_size="18sp"
+            app:isb_max="100"
+            app:isb_min="0"
+            app:isb_only_thumb_draggable="true"
+            app:isb_progress="0"
+            app:isb_seek_smoothly="false"
+            app:isb_show_indicator="rounded_rectangle"
+            app:isb_thumb_color="#FF9800"
+            app:isb_thumb_size="15dp"
+            app:isb_track_background_color="#292929"
+            app:isb_track_background_size="2.5dp"
+            app:isb_track_progress_color="#3E68FF"
+            app:isb_track_progress_size="4dp" />
+
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp"
+        android:background="#fff" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".97" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
