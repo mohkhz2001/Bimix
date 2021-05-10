@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,7 +20,10 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.mohammadkz.bimix.Fragment.GetPriceFragment;
 import com.mohammadkz.bimix.Fragment.IssuanceFragment;
+import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
+
+import org.json.JSONObject;
 
 public class MainPageActivity extends AppCompatActivity {
 
@@ -31,6 +35,7 @@ public class MainPageActivity extends AppCompatActivity {
     MaterialToolbar topAppBar;
     DrawerLayout drawer_layout;
     ImageView nav_image;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,7 @@ public class MainPageActivity extends AppCompatActivity {
 
         initViews();
         controllerViews();
+        setUser();
         start();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer_layout, R.string.openDrawerContentRes, R.string.closeDrawerContentRes);
@@ -122,6 +128,25 @@ public class MainPageActivity extends AppCompatActivity {
         IssuanceFragment issuanceFragment = new IssuanceFragment();
         fragmentTransaction.replace(R.id.frameLayout, issuanceFragment);
         fragmentTransaction.commit();
+
+    }
+
+    private void setUser() {
+        SharedPreferences sh = getSharedPreferences("user_info", MODE_PRIVATE);
+        String data = sh.getString("user_info", null);
+
+        Log.e("user", " " + data);
+        if (data != null)
+            try {
+                JSONObject jsonObject = new JSONObject(data);
+                user = new User();
+                user.setAuth(jsonObject.getString("auth"));
+                user.setID(jsonObject.getString("ID"));
+                user.setPhoneNumber(jsonObject.getString("phoneNumber"));
+                user.setName(jsonObject.getString("name"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
     }
 
