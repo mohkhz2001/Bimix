@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.BodyInsurance.BodyInsurance_SendFragment">
+
+    <Button
+        android:id="@+id/on"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:autoSizeTextType="none"
+        android:background="@drawable/bg_choose_pic"
+        android:enabled="true"
+        android:gravity="center"
+        android:outlineProvider="background"
+        android:text="عکس روی کارت خودرو"
+        android:textColor="#fff"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:elevation="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline29"
+        app:layout_constraintStart_toStartOf="@+id/guideline28"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/back"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:autoSizeTextType="none"
+        android:background="@drawable/bg_choose_pic"
+        android:enabled="true"
+        android:gravity="center"
+        android:outlineProvider="background"
+        android:text="عکس پشت کارت خودرو"
+        android:textColor="#fff"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:elevation="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline29"
+        app:layout_constraintStart_toStartOf="@+id/guideline28"
+        app:layout_constraintTop_toBottomOf="@+id/on" />
+
+
+    <Button
+        android:id="@+id/next"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:autoSizeTextType="none"
+        android:background="@drawable/bg_confirm"
+        android:enabled="true"
+        android:gravity="center"
+        android:outlineProvider="background"
+        android:text="مرحله ی بعد"
+        android:textColor="#fff"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:elevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline27"
+        app:layout_constraintEnd_toStartOf="@+id/guideline31"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline30" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".90" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
