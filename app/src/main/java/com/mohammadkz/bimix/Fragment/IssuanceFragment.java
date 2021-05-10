@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.mohammadkz.bimix.Activity.BodyInsuranceActivity;
 import com.mohammadkz.bimix.Activity.MainPageActivity;
+import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
 
 
@@ -56,7 +57,6 @@ public class IssuanceFragment extends Fragment {
     private void controllerView() {
 
         bodyInsurance.setOnClickListener(v -> {
-            ((MainPageActivity) getActivity()).setTitle("بیمه بدنه خودرو");
             Intent intent = new Intent(getActivity(), BodyInsuranceActivity.class);
             startActivity(intent);
 
