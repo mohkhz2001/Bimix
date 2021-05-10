@@ -11,22 +11,15 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.NumberPicker;
 
-import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.mohammadkz.bimix.R;
 
-import org.angmarch.views.NiceSpinner;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
-public class InfoFragment extends Fragment {
+public class Body_InfoFragment extends Fragment {
 
     View view;
     AutoCompleteTextView useSpinner, historyInsurance, lastCompany;
     NumberPicker yearPicker_ir, yearPicker_us;
 
-    public InfoFragment() {
+    public Body_InfoFragment() {
         // Required empty public constructor
     }
 
@@ -35,7 +28,7 @@ public class InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_info, container, false);
+        view = inflater.inflate(R.layout.fragment_info_body, container, false);
 
         initViews();
         controllerViews();

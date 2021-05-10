@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.BodyInsurance.InfoFragment">
+    tools:context=".Fragment.BodyInsurance.Body_InfoFragment">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -19,14 +19,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
             android:hint="نوع استفاده"
-            app:boxCornerRadiusBottomEnd="25dp"
-            app:boxCornerRadiusBottomStart="25dp"
-            app:boxCornerRadiusTopEnd="25dp"
-            app:boxCornerRadiusTopStart="25dp"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#FF9800"
             app:boxStrokeWidth="2dp"
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
@@ -36,29 +34,6 @@
                 android:id="@+id/useSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="30dp"
-            android:hint="سابقه ی بیمه بدنه"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeColor="#FF9800"
-            app:boxStrokeWidth="2dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/historyInsurance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -67,21 +42,46 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="30dp"
-            android:hint="شرکت بیمه گر قبلی"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp"
+            android:layout_marginTop="5dp"
+            android:hint="سابقه ی بیمه بدنه"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#FF9800"
-            app:boxStrokeWidth="2dp">
+            app:boxStrokeWidth="2dp"
+            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+            app:hintTextColor="#2B2B2B">
+
+            <AutoCompleteTextView
+                android:id="@+id/historyInsurance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusedByDefault="false"
+                android:inputType="none" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="شرکت بیمه گر قبلی"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
+            app:boxStrokeColor="#FF9800"
+            app:boxStrokeWidth="2dp"
+            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+            app:hintTextColor="#2B2B2B">
 
             <AutoCompleteTextView
                 android:id="@+id/lastCompany"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusedByDefault="false"
                 android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,9 +90,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="30dp"
             android:enabled="true"
             android:hint="شماره بیمه نامه سال قبل"
             app:boxCornerRadiusBottomEnd="12dp"
@@ -112,10 +110,12 @@
                 android:id="@+id/insuranceID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusedByDefault="false"
+                android:inputType="number"
                 android:maxLength="17"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,6 +156,27 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/signUp"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:autoSizeTextType="none"
+            android:background="@drawable/bg_confirm"
+            android:enabled="true"
+            android:gravity="center"
+            android:outlineProvider="background"
+            android:text="مرحله ی بعد"
+            android:textColor="#fff"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            app:elevation="10dp" />
 
     </LinearLayout>
 
@@ -165,13 +186,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.85" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
