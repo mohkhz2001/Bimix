@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.mohammadkz.bimix"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -57,5 +57,11 @@ dependencies {
     //spinner
     implementation 'com.github.arcadefire:nice-spinner:1.4.4'
     implementation 'com.github.chivorns:smartmaterialspinner:1.5.0'
+
+    //checkbox
+    implementation 'com.github.animsh:AnimatedCheckBox:1.0.0'
+
+    //persion date
+    implementation 'com.github.samanzamani.persiandate:PersianDate:0.8'
 
 }
