@@ -1,25 +1,40 @@
 package com.mohammadkz.bimix.Fragment.BodyInsurance;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.mohammadkz.bimix.Activity.BodyInsuranceActivity;
+import com.mohammadkz.bimix.Model.BodyInsurance;
 import com.mohammadkz.bimix.R;
 
-public class Body_InfoFragment extends Fragment {
+public class BodyInsurance_InfoFragment extends Fragment {
 
     View view;
     AutoCompleteTextView useSpinner, historyInsurance, lastCompany;
     NumberPicker yearPicker_ir, yearPicker_us;
+    Button next;
+    TextInputEditText insuranceID, carModel;
+    TextInputLayout insuranceID_layout, lastCompany_layout;
+    BodyInsurance bodyInsurance;
 
-    public Body_InfoFragment() {
+    public BodyInsurance_InfoFragment() {
         // Required empty public constructor
     }
 
@@ -28,7 +43,7 @@ public class Body_InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_info_body, container, false);
+        view = inflater.inflate(R.layout.fragment_info_body_insurance, container, false);
 
         initViews();
         controllerViews();
@@ -42,7 +57,13 @@ public class Body_InfoFragment extends Fragment {
         lastCompany = view.findViewById(R.id.lastCompany);
         yearPicker_ir = view.findViewById(R.id.yearPicker_ir);
         yearPicker_us = view.findViewById(R.id.yearPicker_us);
+        next = view.findViewById(R.id.next);
+        insuranceID = view.findViewById(R.id.insuranceID);
+        carModel = view.findViewById(R.id.carModel);
+        insuranceID_layout = view.findViewById(R.id.insuranceID_layout);
+        lastCompany_layout = view.findViewById(R.id.lastCompany_layout);
 
+        bodyInsurance = new BodyInsurance();
     }
 
     private void controllerViews() {
@@ -58,6 +79,53 @@ public class Body_InfoFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 yearPicker_ir.setValue(newVal + 621);
+            }
+        });
+
+        useSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selected = (String) parent.getItemAtPosition(position);
+                bodyInsurance.setUseFor(selected);
+            }
+
+        });
+
+        historyInsurance.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selected = (String) parent.getItemAtPosition(position);
+                bodyInsurance.setHistory(selected);
+                if (parent.getItemAtPosition(position).equals("خودرو صفر") || parent.getItemAtPosition(position).equals("بیمه بدنه ندارم")) {
+                    lastCompany_layout.setVisibility(View.GONE);
+                    insuranceID_layout.setVisibility(View.GONE);
+                } else {
+                    lastCompany_layout.setVisibility(View.VISIBLE);
+                    insuranceID_layout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        lastCompany.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selected = (String) parent.getItemAtPosition(position);
+                bodyInsurance.setLastCompany(selected);
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bodyInsurance.setYear(Integer.toString(yearPicker_ir.getValue()));
+                bodyInsurance.setNumberInsurance(insuranceID.getText().toString());
+                bodyInsurance.setCarModel(carModel.getText().toString());
+                ((BodyInsuranceActivity) getActivity()).setSeekBar(2);
+
+                BodyInsurance_CoverFragment bodyInsurance_coverFragment = new BodyInsurance_CoverFragment(bodyInsurance);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, bodyInsurance_coverFragment).commit();
             }
         });
 

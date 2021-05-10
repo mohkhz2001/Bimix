@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.BodyInsurance.Body_InfoFragment">
+    tools:context=".Fragment.BodyInsurance.BodyInsurance_InfoFragment">
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -18,8 +19,10 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:hint="نوع استفاده"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
@@ -27,7 +30,7 @@
             app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#FF9800"
             app:boxStrokeWidth="2dp"
-            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+
             app:hintTextColor="#2B2B2B">
 
             <AutoCompleteTextView
@@ -41,8 +44,10 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
             android:hint="سابقه ی بیمه بدنه"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
@@ -50,7 +55,7 @@
             app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#FF9800"
             app:boxStrokeWidth="2dp"
-            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+
             app:hintTextColor="#2B2B2B">
 
             <AutoCompleteTextView
@@ -63,18 +68,22 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lastCompany_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
             android:hint="شرکت بیمه گر قبلی"
+            android:visibility="gone"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#FF9800"
             app:boxStrokeWidth="2dp"
-            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+
             app:hintTextColor="#2B2B2B">
 
             <AutoCompleteTextView
@@ -87,12 +96,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/insuranceID_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
             android:enabled="true"
             android:hint="شماره بیمه نامه سال قبل"
+            android:visibility="gone"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
@@ -119,9 +132,44 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:enabled="true"
+            android:hint="مدل ماشین (پژو 206)"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="#FF9800"
+            app:boxStrokeWidth="2dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="17"
+            app:endIconMode="clear_text"
+            app:endIconTint="#FF9800"
+            app:hintEnabled="true"
+            app:hintTextColor="#000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/carModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusedByDefault="false"
+                android:inputType="text"
+                android:maxLength="17"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="18dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="130dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="horizontal">
@@ -156,29 +204,28 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/signUp"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:autoSizeTextType="none"
-            android:background="@drawable/bg_confirm"
-            android:enabled="true"
-            android:gravity="center"
-            android:outlineProvider="background"
-            android:text="مرحله ی بعد"
-            android:textColor="#fff"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            app:backgroundTint="@null"
-            app:elevation="10dp" />
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/next"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:autoSizeTextType="none"
+        android:background="@drawable/bg_confirm"
+        android:enabled="true"
+        android:gravity="center"
+        android:outlineProvider="background"
+        android:text="مرحله ی بعد"
+        android:textColor="#fff"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:elevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline21"
+        app:layout_constraintEnd_toStartOf="@+id/guideline20"
+        app:layout_constraintStart_toStartOf="@+id/guideline19" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -186,13 +233,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.85" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
