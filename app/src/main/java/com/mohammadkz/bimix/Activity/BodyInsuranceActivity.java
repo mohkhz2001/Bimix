@@ -4,19 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mohammadkz.bimix.Fragment.BodyInsurance.InfoFragment;
+import com.mohammadkz.bimix.Fragment.BodyInsurance.BodyInsurance_InfoFragment;
+import com.mohammadkz.bimix.Model.BodyInsurance;
 import com.mohammadkz.bimix.R;
 import com.warkiz.widget.IndicatorSeekBar;
 
 public class BodyInsuranceActivity extends AppCompatActivity {
 
     IndicatorSeekBar seekBar;
-    TextView firstInfo;
+    TextView firstInfo, cover, off, visit, send, confirmInfo, trackingCode;
     ImageView back_nav;
 
     @Override
@@ -34,6 +36,12 @@ public class BodyInsuranceActivity extends AppCompatActivity {
     private void initViews() {
         seekBar = findViewById(R.id.seekBar);
         firstInfo = findViewById(R.id.firstInfo);
+        cover = findViewById(R.id.cover);
+        off = findViewById(R.id.off);
+        visit = findViewById(R.id.visit);
+        send = findViewById(R.id.send);
+        confirmInfo = findViewById(R.id.confirmInfo);
+        trackingCode = findViewById(R.id.trackingCode);
         back_nav = findViewById(R.id.back_nav);
 
     }
@@ -53,40 +61,53 @@ public class BodyInsuranceActivity extends AppCompatActivity {
         });
 
         firstInfo.setOnClickListener(v -> {
-            setSeekBar();
+            setSeekBar(1);
         });
     }
 
-    private void setSeekBar() {
-        int n = seekBar.getProgress() + 25;
-        seekBar.setProgress(n);
-        setLevel(n);
+    public void setSeekBar(int slide) {
+        double a = (100 / 7) * (slide - 1);
+        double b = Math.round(a);
+        seekBar.setProgress((int) b);
+        setLevel(slide);
     }
 
     private void setLevel(int n) {
+
         switch (n) {
-            case 0:
-//                firstInfo.setEnabled(true);
+            case 1:
+                Log.e("level", "1");
                 break;
-            case 25:
+            case 2:
                 firstInfo.setEnabled(false);
+                cover.setEnabled(true);
                 break;
-            case 50:
-
+            case 3:
+                cover.setEnabled(false);
+                off.setEnabled(true);
                 break;
-
-            case 75:
-
+            case 4:
+                off.setEnabled(false);
+                visit.setEnabled(true);
                 break;
-            case 100:
-
+            case 5:
+                visit.setEnabled(false);
+                send.setEnabled(true);
+                break;
+            case 6:
+                send.setEnabled(false);
+                confirmInfo.setEnabled(true);
+                break;
+            case 7:
+                confirmInfo.setEnabled(false);
+                trackingCode.setEnabled(true);
                 break;
         }
     }
 
     private void start() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        InfoFragment infoFragment = new InfoFragment();
+        BodyInsurance_InfoFragment infoFragment = new BodyInsurance_InfoFragment();
         fragmentTransaction.replace(R.id.frameLayout, infoFragment).commit();
     }
 }

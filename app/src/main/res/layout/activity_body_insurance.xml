@@ -105,6 +105,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline17" />
 
             <TextView
+                android:id="@+id/cover"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="3dp"
@@ -120,6 +121,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline17" />
 
             <TextView
+                android:id="@+id/off"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="3dp"
@@ -135,6 +137,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline17" />
 
             <TextView
+                android:id="@+id/visit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="3dp"
@@ -150,6 +153,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline17" />
 
             <TextView
+                android:id="@+id/send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="3dp"
@@ -165,6 +169,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline17" />
 
             <TextView
+                android:id="@+id/confirmInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="3dp"
@@ -181,6 +186,7 @@
 
 
             <TextView
+                android:id="@+id/trackingCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
