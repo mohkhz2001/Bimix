@@ -61,7 +61,10 @@ dependencies {
     //checkbox
     implementation 'com.github.animsh:AnimatedCheckBox:1.0.0'
 
-    //persion date
+    //persian date
     implementation 'com.github.samanzamani.persiandate:PersianDate:0.8'
+
+    // runtime permission
+    implementation 'gun0912.ted:tedpermission:2.2.3'
 
 }

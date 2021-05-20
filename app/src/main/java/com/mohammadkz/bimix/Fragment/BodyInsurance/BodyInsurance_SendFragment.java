@@ -1,6 +1,7 @@
 package com.mohammadkz.bimix.Fragment.BodyInsurance;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,8 +11,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -22,21 +21,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.mohammadkz.bimix.Activity.BodyInsuranceActivity;
 import com.mohammadkz.bimix.Model.BodyInsurance;
 import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static android.bluetooth.BluetoothGattCharacteristic.PERMISSION_READ;
-import static android.bluetooth.BluetoothGattCharacteristic.PERMISSION_WRITE;
-import static android.content.Context.CAMERA_SERVICE;
-import static android.media.MediaRecorder.VideoSource.CAMERA;
-
 
 public class BodyInsurance_SendFragment extends Fragment {
 
@@ -64,8 +63,6 @@ public class BodyInsurance_SendFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Uploading...");
 
-
-        checkPermission();
         initViews();
         controllerViews();
 
@@ -83,20 +80,19 @@ public class BodyInsurance_SendFragment extends Fragment {
         on.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                permission();
                 n = 1;
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, 1);
+                bottomSheetChooser();
+
             }
         });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                permission();
                 n = 2;
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, 1);
+                bottomSheetChooser();
             }
         });
 
@@ -142,10 +138,26 @@ public class BodyInsurance_SendFragment extends Fragment {
                 }
                 cursor.close();
 
+            } else if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
+
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                if (n == 1) {
+                    bodyInsurance.setOnCarCard(encoded);
+                } else {
+                    bodyInsurance.setBackOnCarCard(encoded);
+                }
+
             } else {
                 Toast.makeText(getContext(), "You haven't picked Image", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
+            e.getMessage();
+            Log.e("error", " " + e.getMessage());
             Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
         }
 
@@ -161,105 +173,64 @@ public class BodyInsurance_SendFragment extends Fragment {
         return encodedImage;
     }
 
-    // Uploading Image/Video
-//    private void uploadFile(String base) {
-//        progressDialog.show();
-//        Log.e("lenght", " " + base.length());
-//
-//        ApiConfig apiConfig = AppConfig.getRetrofit().create(ApiConfig.class);
-//        Call<ServerResponse> request = apiConfig.uploadImage("test", base);
-//
-//        request.enqueue(new Callback<ServerResponse>() {
-//            @Override
-//            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
-//                Log.e("response", " " + response.body().response);
-//                Log.e("response", " " + response);
-//                progressDialog.dismiss();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ServerResponse> call, Throwable t) {
-//                t.getMessage();
-//                progressDialog.dismiss();
-//            }
-//        });
-//
-////        String url = "http://192.168.1.103/uploadIMG/upload.php?img=" + base;
-////        StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-////            @Override
-////            public void onResponse(String response) {
-////                Log.e("response" , " " + response);
-////            }
-////        }, new Response.ErrorListener() {
-////            @Override
-////            public void onErrorResponse(VolleyError error) {
-////
-////            }
-////        });
-////
-////        requestQueue.add(stringRequest);
-//
-//    }
+    public void bottomSheetChooser() {
+
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
+        View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_choose_send, (LinearLayout) view.findViewById(R.id.bottomSheetContainer));
+
+        bottomSheetView.findViewById(R.id.camera).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePicture, 0);//zero can be replaced with any action code (called requestCode)
+
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        bottomSheetView.findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, 1);//one can be replaced with any action code
+
+                bottomSheetDialog.dismiss();
+
+            }
+        });
+
+        bottomSheetView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+    }
 
     // runtime permission
-    public boolean checkPermission() {
-        int READ_EXTERNAL_PERMISSION = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
-        if ((READ_EXTERNAL_PERMISSION != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_READ);
-            return false;
-        }
+    private void permission() {
 
-        int WRITE_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if ((WRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_READ);
-            return false;
-        }
-        int CAMERA = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
-        if ((CAMERA != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 4);
-            return false;
-        }
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
 
-        return true;
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+
+            }
+        };
+
+        TedPermission.with(getContext())
+                .setPermissionListener(permissionListener)
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).check();
     }
 
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_READ: {
-                if (grantResults.length > 0 && permissions[0].equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                        Toast.makeText(getContext(), "Please allow storage permission", Toast.LENGTH_LONG).show();
-                    } else {
-
-                    }
-                }
-
-            }
-            break;
-            case PERMISSION_WRITE: {
-                if (grantResults.length > 0 && permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                        Toast.makeText(getContext(), "Please allow storage permission", Toast.LENGTH_LONG).show();
-                    } else {
-
-                    }
-                }
-
-            }
-            break;
-            case 4: {
-                if (grantResults.length > 0 && permissions[0].equals(Manifest.permission.CAMERA)) {
-                    if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                        Toast.makeText(getContext(), "Please allow storage permission", Toast.LENGTH_LONG).show();
-                    } else {
-
-                    }
-                }
-
-            }
-            break;
-
-        }
-    }
 }
