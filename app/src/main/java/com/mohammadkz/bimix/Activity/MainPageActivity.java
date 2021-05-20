@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.mohammadkz.bimix.Fragment.GetPriceFragment;
+import com.mohammadkz.bimix.Fragment.HistoryFragment;
 import com.mohammadkz.bimix.Fragment.IssuanceFragment;
 import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
@@ -105,6 +106,13 @@ public class MainPageActivity extends AppCompatActivity {
 
                         break;
                     case R.id.nav_profile:
+
+                        break;
+                    case R.id.history:
+                        setTitle("تاریخچه خرید");
+
+                        HistoryFragment historyFragment = new HistoryFragment(user);
+                        fragmentTransaction.replace(R.id.frameLayout, historyFragment).commit();
 
                         break;
                     case R.id.nav_issuance:
