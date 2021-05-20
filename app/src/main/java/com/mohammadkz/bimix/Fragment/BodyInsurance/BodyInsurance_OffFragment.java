@@ -23,7 +23,7 @@ public class BodyInsurance_OffFragment extends Fragment {
     View view;
     BodyInsurance bodyInsurance;
 
-    AnimatedCheckBox one, two, there, four, five, six;
+    AnimatedCheckBox one, there, four, five, six;
     TextView one_txt, two_txt, three_txt, four_txt, five_txt, six_txt;
     ArrayList<String> offList = new ArrayList<>();
     Button next;
@@ -48,7 +48,6 @@ public class BodyInsurance_OffFragment extends Fragment {
 
     private void initViews() {
         one = view.findViewById(R.id.one);
-        two = view.findViewById(R.id.two);
         there = view.findViewById(R.id.three);
         four = view.findViewById(R.id.four);
         five = view.findViewById(R.id.five);
@@ -57,7 +56,6 @@ public class BodyInsurance_OffFragment extends Fragment {
         six.setEnabled(false);
 
         one_txt = view.findViewById(R.id.one_txt);
-        two_txt = view.findViewById(R.id.two_txt);
         three_txt = view.findViewById(R.id.three_txt);
         four_txt = view.findViewById(R.id.four_txt);
         five_txt = view.findViewById(R.id.five_txt);
@@ -75,18 +73,6 @@ public class BodyInsurance_OffFragment extends Fragment {
                     offList.add(one_txt.getText().toString());
                 else {
                     int n = offList.indexOf(one_txt.getText().toString());
-                    offList.remove(n);
-                }
-            }
-        });
-
-        two.setOnCheckedChangeListener(new AnimatedCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(AnimatedCheckBox checkBox, boolean isChecked) {
-                if (isChecked)
-                    offList.add(two_txt.getText().toString());
-                else {
-                    int n = offList.indexOf(two_txt.getText().toString());
                     offList.remove(n);
                 }
             }
