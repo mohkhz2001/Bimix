@@ -17,9 +17,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/useSpinner_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
@@ -30,7 +31,8 @@
             app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#FF9800"
             app:boxStrokeWidth="2dp"
-
+            app:errorEnabled="false"
+            app:errorTextColor="#FF0000"
             app:hintTextColor="#2B2B2B">
 
             <AutoCompleteTextView
@@ -42,9 +44,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/historyInsurance_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -55,7 +58,7 @@
             app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#FF9800"
             app:boxStrokeWidth="2dp"
-
+            app:errorTextColor="#FF0000"
             app:hintTextColor="#2B2B2B">
 
             <AutoCompleteTextView
@@ -71,7 +74,7 @@
             android:id="@+id/lastCompany_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -83,8 +86,10 @@
             app:boxCornerRadiusTopStart="15dp"
             app:boxStrokeColor="#FF9800"
             app:boxStrokeWidth="2dp"
+            app:errorTextColor="#FF0000"
+            app:hintTextColor="#2B2B2B"
 
-            app:hintTextColor="#2B2B2B">
+            tools:visibility="visible">
 
             <AutoCompleteTextView
                 android:id="@+id/lastCompany"
@@ -99,7 +104,7 @@
             android:id="@+id/insuranceID_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -112,12 +117,12 @@
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeColor="#FF9800"
             app:boxStrokeWidth="2dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="17"
             app:endIconMode="clear_text"
             app:endIconTint="#FF9800"
+            app:errorTextColor="#FF0000"
             app:hintEnabled="true"
-            app:hintTextColor="#000">
+            app:hintTextColor="#000"
+            tools:visibility="visible">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/insuranceID"
@@ -125,7 +130,6 @@
                 android:layout_height="wrap_content"
                 android:focusedByDefault="false"
                 android:inputType="number"
-                android:maxLength="17"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textSize="18dp" />
@@ -133,9 +137,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/carModel_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -147,10 +152,9 @@
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeColor="#FF9800"
             app:boxStrokeWidth="2dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="17"
             app:endIconMode="clear_text"
             app:endIconTint="#FF9800"
+            app:errorTextColor="#FF0000"
             app:hintEnabled="true"
             app:hintTextColor="#000">
 
@@ -160,7 +164,6 @@
                 android:layout_height="wrap_content"
                 android:focusedByDefault="false"
                 android:inputType="text"
-                android:maxLength="17"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textSize="18dp" />
@@ -168,11 +171,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
+            android:id="@+id/year_layout"
             android:layout_width="wrap_content"
             android:layout_height="130dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <NumberPicker
                 android:id="@+id/yearPicker_ir"
@@ -181,17 +187,16 @@
                 android:layout_marginRight="25dp"
                 android:focusable="false"
                 android:focusedByDefault="false"
-                android:showDividers="end"
-                android:theme="@style/MyAppTheme.NumberPicker" />
-
+                android:showDividers="end" />
+            <!--            android:theme="@style/MyAppTheme.NumberPicker"-->
             <NumberPicker
                 android:id="@+id/yearPicker_us"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:focusedByDefault="false"
-                android:showDividers="end"
-                android:theme="@style/MyAppTheme.NumberPicker" />
+                android:showDividers="end" />
+            <!--            android:theme="@style/MyAppTheme.NumberPicker"-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -247,6 +252,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.92" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
