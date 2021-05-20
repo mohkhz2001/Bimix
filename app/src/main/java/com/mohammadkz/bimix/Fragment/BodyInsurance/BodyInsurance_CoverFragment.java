@@ -2,18 +2,24 @@ package com.mohammadkz.bimix.Fragment.BodyInsurance;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.animsh.animatedcheckbox.AnimatedCheckBox;
 import com.mohammadkz.bimix.Activity.BodyInsuranceActivity;
+import com.mohammadkz.bimix.Adapter.ChooseBoxAdapter;
 import com.mohammadkz.bimix.Model.BodyInsurance;
+import com.mohammadkz.bimix.Model.Cover;
 import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
 
@@ -27,10 +33,10 @@ public class BodyInsurance_CoverFragment extends Fragment {
 
     private BodyInsurance bodyInsurance;
     View view;
-    AnimatedCheckBox one, two, there, four, five, six, seven, eight;
-    TextView one_txt, two_txt, three_txt, four_txt, five_txt, six_txt, seven_txt, eight_txt;
+    RecyclerView recyclerView;
     ArrayList<String> coverList = new ArrayList<>();
     Button next;
+    ArrayList<Cover> covers = new ArrayList<>();
 
     public BodyInsurance_CoverFragment(BodyInsurance bodyInsurance) {
         // Required empty public constructor
@@ -46,128 +52,19 @@ public class BodyInsurance_CoverFragment extends Fragment {
 
         initViews();
         controllerViews();
+        setAdapter();
 
         return view;
     }
 
     private void initViews() {
-        one = view.findViewById(R.id.one);
-        two = view.findViewById(R.id.two);
-        there = view.findViewById(R.id.three);
-        four = view.findViewById(R.id.four);
-        five = view.findViewById(R.id.five);
-        six = view.findViewById(R.id.six);
-        eight = view.findViewById(R.id.eight);
-        seven = view.findViewById(R.id.seven);
 
-        one_txt = view.findViewById(R.id.one_txt);
-        two_txt = view.findViewById(R.id.two_txt);
-        three_txt = view.findViewById(R.id.three_txt);
-        four_txt = view.findViewById(R.id.four_txt);
-        five_txt = view.findViewById(R.id.five_txt);
-        six_txt = view.findViewById(R.id.six_txt);
-        seven_txt = view.findViewById(R.id.seven_txt);
-        eight_txt = view.findViewById(R.id.eight_txt);
+        recyclerView = view.findViewById(R.id.coverList);
 
         next = view.findViewById(R.id.next);
     }
 
     private void controllerViews() {
-        one.setOnCheckedChangeListener(new AnimatedCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(AnimatedCheckBox checkBox, boolean isChecked) {
-                if (isChecked)
-                    coverList.add(one_txt.getText().toString());
-                else {
-                    int n = coverList.indexOf(one_txt.getText().toString());
-                    coverList.remove(n);
-                }
-            }
-        });
-
-        two.setOnCheckedChangeListener(new AnimatedCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(AnimatedCheckBox checkBox, boolean isChecked) {
-                if (isChecked)
-                    coverList.add(two_txt.getText().toString());
-                else {
-                    int n = coverList.indexOf(two_txt.getText().toString());
-                    coverList.remove(n);
-                }
-            }
-        });
-
-        there.setOnCheckedChangeListener(new AnimatedCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(AnimatedCheckBox checkBox, boolean isChecked) {
-                if (isChecked)
-                    coverList.add(three_txt.getText().toString());
-                else {
-                    int n = coverList.indexOf(three_txt.getText().toString());
-                    coverList.remove(n);
-                }
-            }
-        });
-
-        four.setOnCheckedChangeListener(new AnimatedCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(AnimatedCheckBox checkBox, boolean isChecked) {
-                if (isChecked)
-                    coverList.add(four_txt.getText().toString());
-                else {
-                    int n = coverList.indexOf(four_txt.getText().toString());
-                    coverList.remove(n);
-                }
-            }
-        });
-
-        five.setOnCheckedChangeListener(new AnimatedCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(AnimatedCheckBox checkBox, boolean isChecked) {
-                if (isChecked)
-                    coverList.add(five_txt.getText().toString());
-                else {
-                    int n = coverList.indexOf(five_txt.getText().toString());
-                    coverList.remove(n);
-                }
-            }
-        });
-
-        six.setOnCheckedChangeListener(new AnimatedCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(AnimatedCheckBox checkBox, boolean isChecked) {
-                if (isChecked)
-                    coverList.add(six_txt.getText().toString());
-                else {
-                    int n = coverList.indexOf(six_txt.getText().toString());
-                    coverList.remove(n);
-                }
-            }
-        });
-
-        seven.setOnCheckedChangeListener(new AnimatedCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(AnimatedCheckBox checkBox, boolean isChecked) {
-                if (isChecked)
-                    coverList.add(seven_txt.getText().toString());
-                else {
-                    int n = coverList.indexOf(seven_txt.getText().toString());
-                    coverList.remove(n);
-                }
-            }
-        });
-
-        eight.setOnCheckedChangeListener(new AnimatedCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(AnimatedCheckBox checkBox, boolean isChecked) {
-                if (isChecked)
-                    coverList.add(eight_txt.getText().toString());
-                else {
-                    int n = coverList.indexOf(eight_txt.getText().toString());
-                    coverList.remove(n);
-                }
-            }
-        });
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +76,41 @@ public class BodyInsurance_CoverFragment extends Fragment {
                 fragmentTransaction.replace(R.id.frameLayout, bodyInsurance_offFragment).commit();
             }
         });
+
+    }
+
+    private void setAdapter() {
+
+        covers.add(new Cover("غرامت عدم استفاده از خودرو در زمان تعمیر"));
+        covers.add(new Cover("نوسان قیمت وسیله نقلیه تا 25 درصد"));
+        covers.add(new Cover("نوسان قیمت وسیله نقلیه تا 50 درصد"));
+        covers.add(new Cover("نوسان قیمت وسیله نقلیه تا 100 درصد"));
+        covers.add(new Cover("سرقت درجای کلیه قطعات خودرو"));
+        covers.add(new Cover("بلایای طبیعی"));
+        covers.add(new Cover("کشیدن میخ و اشیای مشابه بر روی بدنه خودرو"));
+        covers.add(new Cover("خارج از کشور"));
+
+
+        ChooseBoxAdapter chooseBoxAdapter = new ChooseBoxAdapter(getContext(), covers);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setAdapter(chooseBoxAdapter);
+
+        chooseBoxAdapter.setOnCheckedChangeListener(new ChooseBoxAdapter.OnCheckedChangeListener() {
+            @Override
+            public void onItemClick(int pos, boolean isChecked) {
+
+                covers.get(pos).setChecked(isChecked);
+                if (isChecked) {
+                    coverList.add(covers.get(pos).getText());
+                } else {
+                    int n = coverList.indexOf(covers.get(pos).getText().toString());
+                    coverList.remove(n);
+                }
+
+            }
+        });
+
 
     }
 
