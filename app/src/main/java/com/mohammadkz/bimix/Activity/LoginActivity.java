@@ -80,8 +80,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 sharedPreferences(new LoginResponse()); // shouldnt be here
-//                t.getMessage();
-//                ErrorHandler.alertDialog_connectionFail(LoginActivity.this);
+                t.getMessage();
+                StaticFun.alertDialog_connectionFail(LoginActivity.this);
 //                activeLayout();
             }
         });
