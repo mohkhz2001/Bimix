@@ -85,6 +85,8 @@ public class BodyInsurance_VisitFragment extends Fragment {
                     if (ourPlace.isChecked())
                         ourPlace.setChecked(false);
                     rootInfo.setVisibility(View.VISIBLE);
+                } else {
+                    rootInfo.setVisibility(View.GONE);
                 }
             }
         });
@@ -92,12 +94,10 @@ public class BodyInsurance_VisitFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                setValue();
+
                 ((BodyInsuranceActivity) getActivity()).setSeekBar(5);
-                BodyInsurance.Visit visit = new BodyInsurance.Visit(yourPlace.isChecked());
-                visit.setAddress(address.getText().toString());
-                visit.setDate(days.get(day.getValue()));
-                visit.setTime(hour_array[hour.getValue()]);
-                bodyInsurance.setVisit(visit);
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 BodyInsurance_SendFragment bodyInsurance_sendFragment = new BodyInsurance_SendFragment(bodyInsurance);
@@ -153,6 +153,17 @@ public class BodyInsurance_VisitFragment extends Fragment {
         String[] c = days.toArray(new String[0]);
 
         return c;
+    }
+
+    private void setValue() {
+        BodyInsurance.Visit visit = new BodyInsurance.Visit(yourPlace.isChecked());
+
+        if (yourPlace.isChecked()) {
+            visit.setAddress(address.getText().toString());
+            visit.setDate(days.get(day.getValue()));
+            visit.setTime(hour_array[hour.getValue()]);
+        }
+        bodyInsurance.setVisit(visit);
     }
 
 }
