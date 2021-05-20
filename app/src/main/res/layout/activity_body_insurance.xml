@@ -112,7 +112,7 @@
                 android:layout_weight="1"
                 android:enabled="false"
                 android:gravity="center"
-                android:text="پوشش"
+                android:text="پوشش های\nتکمیلی"
                 android:textColor="@drawable/level_req"
                 android:textSize="@dimen/level_size_txt"
                 android:textStyle="bold"
