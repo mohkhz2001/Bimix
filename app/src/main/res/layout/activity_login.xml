@@ -85,12 +85,12 @@
 
     <Button
         android:id="@+id/login"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="@dimen/confirm_btn_width"
         android:layout_height="@dimen/confirm_btn_height"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:background="@drawable/confirm_btn"
+        android:background="@drawable/btn_background"
         android:elevation="5dp"
         android:gravity="center"
         android:text="ورود"
