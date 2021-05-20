@@ -23,7 +23,7 @@ public class GetPriceFragment extends Fragment {
     View view;
 
     ImageView bodyInsurance, thirdInsurance, docInsurance, personInsurance, elevatorInsurance,
-            lifeInsurance, fireInsurance, damageInsurance;
+            lifeInsurance, fireInsurance;
 
 
     public GetPriceFragment() {
@@ -53,7 +53,6 @@ public class GetPriceFragment extends Fragment {
         elevatorInsurance = view.findViewById(R.id.elevatorInsurance);
         lifeInsurance = view.findViewById(R.id.lifeInsurance);
         fireInsurance = view.findViewById(R.id.fireInsurance);
-        damageInsurance = view.findViewById(R.id.damageInsurance);
 
     }
 
@@ -85,10 +84,6 @@ public class GetPriceFragment extends Fragment {
 
         fireInsurance.setOnClickListener(v -> {
             choose(4);
-        });
-
-        damageInsurance.setOnClickListener(v -> {
-
         });
 
     }
