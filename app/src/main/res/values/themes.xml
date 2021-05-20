@@ -14,9 +14,9 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="MyAppTheme.NumberPicker" parent="MyAppTheme.NumberPicker">
-        <item name="colorControlNormal">#FF9800</item>
-    </style>
+<!--    <style name="MyAppTheme.NumberPicker" parent="MyAppTheme.NumberPicker">-->
+<!--        <item name="colorControlNormal">#FF9800</item>-->
+<!--    </style>-->
 
     <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
