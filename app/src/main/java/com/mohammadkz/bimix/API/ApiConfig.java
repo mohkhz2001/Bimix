@@ -1,8 +1,12 @@
 package com.mohammadkz.bimix.API;
 
 
+import com.mohammadkz.bimix.Model.HistoryInsuranceResponse;
+import com.mohammadkz.bimix.Model.InsuranceResponse;
 import com.mohammadkz.bimix.Model.LoginResponse;
 import com.mohammadkz.bimix.Model.RequestResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -26,6 +30,27 @@ public interface ApiConfig {
     @FormUrlEncoded
     @POST("TrackingCheck.php")
     Call<RequestResponse> req_checkTrackingCode(@Field("code") String code);
+
+    @FormUrlEncoded
+    @POST("FireInsurance.php")
+    Call<RequestResponse> req_fireInsurance(@Field("id") String id,
+                                            @Field("userAuth") String userAuth,
+                                            @Field("typeOfStructure") String typeOfStructure,
+                                            @Field("buildingType") String buildingType,
+                                            @Field("price") String price,
+                                            @Field("area") String area,
+                                            @Field("lifeTime") String lifeTime,
+                                            @Field("postCode") String postCode,
+                                            @Field("address") String address,
+                                            @Field("trackingCode") String trackingCode
+    );
+
+    @FormUrlEncoded
+    @POST("getUserInsurance.php")
+    Call<List<InsuranceResponse>> req_getUserInsurance(@Field("id") String id,
+                                    @Field("auth") String auth
+
+    );
 
 
     @FormUrlEncoded
