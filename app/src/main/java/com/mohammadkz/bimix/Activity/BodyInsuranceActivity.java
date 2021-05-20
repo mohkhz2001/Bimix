@@ -66,9 +66,28 @@ public class BodyInsuranceActivity extends AppCompatActivity {
     }
 
     public void setSeekBar(int slide) {
-        double a = (100 / 7) * (slide - 1);
-        double b = Math.round(a);
-        seekBar.setProgress((int) b);
+
+        switch (slide){
+            case 2:
+                seekBar.setProgress(18);
+                break;
+            case 3:
+                seekBar.setProgress(37);
+                break;
+            case 4:
+                seekBar.setProgress(48);
+                break;
+            case 5:
+                seekBar.setProgress(62);
+                break;
+            case 6:
+                seekBar.setProgress(79);
+                break;
+            case 7:
+                seekBar.setProgress(100);
+                break;
+        }
+
         setLevel(slide);
     }
 
