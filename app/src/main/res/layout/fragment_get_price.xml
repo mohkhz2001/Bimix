@@ -94,10 +94,10 @@
 
 
         <ImageView
-            android:id="@+id/damageInsurance"
             android:layout_width="match_parent"
             android:layout_height="135dp"
             android:layout_marginTop="10dp"
+            android:visibility="invisible"
             android:layout_weight="1"
             android:src="@drawable/ic_damage" />
 
