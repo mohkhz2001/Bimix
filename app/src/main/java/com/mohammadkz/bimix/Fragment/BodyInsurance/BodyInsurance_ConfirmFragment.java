@@ -25,7 +25,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.mohammadkz.bimix.API.ApiConfig;
 import com.mohammadkz.bimix.API.AppConfig;
+import com.mohammadkz.bimix.Activity.BodyInsuranceActivity;
 import com.mohammadkz.bimix.Activity.MainPageActivity;
+import com.mohammadkz.bimix.Fragment.TrackingCodeFragment;
 import com.mohammadkz.bimix.Model.BodyInsurance;
 import com.mohammadkz.bimix.Model.LoginResponse;
 import com.mohammadkz.bimix.Model.RequestResponse;
@@ -112,7 +114,6 @@ public class BodyInsurance_ConfirmFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
 
-
                             //init views
                             TextInputEditText name, phoneNumber, birthdayDate, idCard;
                             name = bottomSheetDialog.findViewById(R.id.name);
@@ -198,6 +199,9 @@ public class BodyInsurance_ConfirmFragment extends Fragment {
         String cover = toJson(bodyInsurance.getCover());
         String discount = toJson(bodyInsurance.getOff());
 
+        if (bodyInsurance.getAnotherPerson() == null)
+            bodyInsurance.setAnotherPerson(new BodyInsurance.AnotherPerson());
+
         Log.e("tracking code", " " + bodyInsurance.getTrackingCode());
 
         Call<RequestResponse> getData = request.req_bodyInsurance(user.getID(), user.getAuth(), bodyInsurance.getTrackingCode(), bodyInsurance.getHistory(), bodyInsurance.getNumberInsurance(), bodyInsurance.getUseFor(), bodyInsurance.getCarModel(),
@@ -209,15 +213,21 @@ public class BodyInsurance_ConfirmFragment extends Fragment {
             @Override
             public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                 Log.e("response", " " + response.body().getCode());
-                progressDialog.dismiss();
+                if (!response.body().getCode().equals("5")) {
+                    StaticFun.alertDialog_connectionFail(getContext());
+                } else {
+                    progressDialog.dismiss();
+                    trackingCode();
+                }
 
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
             }
 
             @Override
             public void onFailure(Call<RequestResponse> call, Throwable t) {
                 Log.e("response", " " + t.getMessage());
+                progressDialog.dismiss();
+                trackingCode();
             }
         });
     }
@@ -311,6 +321,14 @@ public class BodyInsurance_ConfirmFragment extends Fragment {
         // if no network is available networkInfo will be null
         // otherwise check if we are connected
         return networkInfo != null && networkInfo.isConnected();
+    }
+
+    private void trackingCode() {
+        ((BodyInsuranceActivity) getActivity()).setSeekBar(7);
+        TrackingCodeFragment trackingCodeFragment = new TrackingCodeFragment(bodyInsurance.getTrackingCode());
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, trackingCodeFragment).commit();
+
     }
 
 }
