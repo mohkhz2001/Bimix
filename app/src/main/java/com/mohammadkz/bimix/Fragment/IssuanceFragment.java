@@ -13,6 +13,8 @@ import android.widget.ImageView;
 
 import com.mohammadkz.bimix.Activity.BodyInsuranceActivity;
 import com.mohammadkz.bimix.Activity.FireInsuranceActivity;
+import com.mohammadkz.bimix.Activity.ThirdInsuranceActivity;
+import com.mohammadkz.bimix.Model.ThirdInsurance;
 import com.mohammadkz.bimix.R;
 
 
@@ -62,7 +64,8 @@ public class IssuanceFragment extends Fragment {
         });
 
         thirdInsurance.setOnClickListener(v -> {
-
+            Intent intent = new Intent(getActivity(), ThirdInsuranceActivity.class);
+            startActivity(intent);
         });
 
         docInsurance.setOnClickListener(v -> {
