@@ -79,10 +79,9 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                sharedPreferences(new LoginResponse()); // shouldnt be here
                 t.getMessage();
                 StaticFun.alertDialog_connectionFail(LoginActivity.this);
-//                activeLayout();
+                activeLayout();
             }
         });
 
@@ -92,10 +91,10 @@ public class LoginActivity extends AppCompatActivity {
     private void sharedPreferences(LoginResponse response) {
 
         // changed of ==>  response.getCode().equals("1")
-        if (true) {
+        if (response.getCode().equals("1")) {
 
-//            User user = new User(response.getID(), response.getAuth(), response.getName(), phoneNumber.getText().toString());
-            User user = new User("1", "awdamk2985efasd", "محمدمهدی خواجه زاده", "09388209270");
+            User user = new User(response.getID(), response.getAuth(), response.getName(), phoneNumber.getText().toString());
+//            User user = new User("1", "RLXhB_UoikPTfD5p8GG8Anp9H1CJnVFN", "محمدمهدی خواجه زاده", "09388209270");
             SharedPreferences sh = getSharedPreferences("user_info", MODE_PRIVATE);
             Gson gson = new Gson();
             String userToTransfer = gson.toJson(user);
