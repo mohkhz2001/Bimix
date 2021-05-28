@@ -2,8 +2,17 @@ package com.mohammadkz.bimix.Model;
 
 public class ThirdInsurance {
 
-    private String useFor, lastCompany, insuranceID, endDate, trackingCode , date;
+    private String useFor, lastCompany, insuranceID, endDate, trackingCode, date;
     private String insurancePic, onCarCardPic, backCarCardPic, onCertificatePic, backCertificatePic;
+    private String payed;
+
+    public String getPayed() {
+        return payed;
+    }
+
+    public void setPayed(String payed) {
+        this.payed = payed;
+    }
 
     public String getDate() {
         return date;

@@ -1,12 +1,25 @@
 package com.mohammadkz.bimix.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class BodyInsurance {
-    private String useFor, history, year, lastCompany, numberInsurance, carModel, onCarCard, backOnCarCard , trackingCode;
+    private String useFor, history, year, lastCompany, numberInsurance, carModel, onCarCard, backOnCarCard, trackingCode;
     private ArrayList<String> cover, off;
     private Visit visit;
     private AnotherPerson anotherPerson;
+
+    @SerializedName("payStatus")
+    private String payed;
+
+    public String getPayed() {
+        return payed;
+    }
+
+    public void setPayed(String payed) {
+        this.payed = payed;
+    }
 
     public String getTrackingCode() {
         return trackingCode;
