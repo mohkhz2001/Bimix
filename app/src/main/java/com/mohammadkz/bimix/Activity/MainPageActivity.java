@@ -1,5 +1,6 @@
 package com.mohammadkz.bimix.Activity;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.mohammadkz.bimix.Fragment.GetPriceFragment;
 import com.mohammadkz.bimix.Fragment.HistoryFragment;
 import com.mohammadkz.bimix.Fragment.IssuanceFragment;
+import com.mohammadkz.bimix.Fragment.PayFragment;
+import com.mohammadkz.bimix.Fragment.ProfileFragment;
 import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
 
@@ -46,6 +49,7 @@ public class MainPageActivity extends AppCompatActivity {
         initViews();
         controllerViews();
         setUser();
+        setValue();
         start();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer_layout, R.string.openDrawerContentRes, R.string.closeDrawerContentRes);
@@ -106,18 +110,25 @@ public class MainPageActivity extends AppCompatActivity {
 
                         break;
                     case R.id.nav_profile:
+                        profile();
+
+                        break;
+
+                    case R.id.nav_pay:
+                        setTitle("پرداخت بیمه نامه");
+                        PayFragment payFragment = new PayFragment(user);
+                        fragmentTransaction.replace(R.id.frameLayout, payFragment).commit();
 
                         break;
                     case R.id.history:
                         setTitle("تاریخچه خرید");
-
                         HistoryFragment historyFragment = new HistoryFragment(user);
                         fragmentTransaction.replace(R.id.frameLayout, historyFragment).commit();
 
                         break;
                     case R.id.nav_issuance:
                         setTitle("درخواست صدور");
-                        IssuanceFragment issuanceFragment = new IssuanceFragment();
+                        IssuanceFragment issuanceFragment = new IssuanceFragment(user);
                         fragmentTransaction.replace(R.id.frameLayout, issuanceFragment);
                         fragmentTransaction.commit();
 
@@ -133,7 +144,7 @@ public class MainPageActivity extends AppCompatActivity {
 
     private void start() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        IssuanceFragment issuanceFragment = new IssuanceFragment();
+        IssuanceFragment issuanceFragment = new IssuanceFragment(user);
         fragmentTransaction.replace(R.id.frameLayout, issuanceFragment);
         fragmentTransaction.commit();
 
@@ -165,7 +176,20 @@ public class MainPageActivity extends AppCompatActivity {
 
     //set value to the navigation
     private void setValue() {
+        userName.setText(user.getName());
+        userPoint.setText(user.getPoint());
+    }
 
+    public void profile() {
+        setTitle("حساب کاربری");
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        ProfileFragment profileFragment = new ProfileFragment(user.getAuth());
+        fragmentTransaction.replace(R.id.frameLayout, profileFragment).commit();
+        nav_view.setCheckedItem(R.id.nav_profile);
+    }
+
+    public void setNavSelected(@IdRes int id){
+        nav_view.setCheckedItem(id);
     }
 
 }
