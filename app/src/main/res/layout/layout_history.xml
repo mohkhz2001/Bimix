@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -157,6 +158,70 @@
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/pay"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/payCode_txt"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_history_layout_getbtn"
+                    android:backgroundTint="#00E80C"
+                    android:elevation="8dp"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="پرداخت بیمه نامه"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:backgroundTint="@null"
+                    tools:visibility="visible" />
+
+                <Button
+                    android:id="@+id/payed"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/pay"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_history_layout_getbtn"
+                    android:elevation="8dp"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="بیمه نامه را پرداخت کردم."
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:backgroundTint="@null"
+                    tools:visibility="visible" />
+
+
+                <TextView
+                    android:id="@+id/payed_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/payed"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/yekan"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:text="کاربر گرامی درخواست شما ثبت شده.\nتا دقایقی دیگر درخواست شما تایید میشود."
+                    android:textColor="#001EE4"
+                    android:textSize="18dp" />
+
                 <TextView
                     android:id="@+id/payCode"
                     android:layout_width="wrap_content"
@@ -174,7 +239,7 @@
                     android:id="@+id/get_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/payCode_txt"
+                    android:layout_below="@id/payed_txt"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="10dp"
@@ -188,7 +253,7 @@
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="100dp"
                     android:layout_height="30dp"
-                    android:layout_below="@id/payCode_txt"
+                    android:layout_below="@id/payed_txt"
                     android:layout_alignParentLeft="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="13dp"
