@@ -44,6 +44,11 @@ public class ChooseBoxAdapter extends RecyclerView.Adapter<ChooseBoxAdapter.view
 
         boolean expended = coverList.get(position).isExpended();
         holder.card_txt.setVisibility(expended ? View.VISIBLE : View.GONE);
+        if (coverList.get(position).getDescribe().equals("")) {
+            holder.expend.setVisibility(View.GONE);
+        } else {
+            holder.describe.setText(coverList.get(position).getDescribe());
+        }
 
         if (expended) {
             holder.expend.setImageResource(R.drawable.ic_arrow_drop_up);
