@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -42,9 +42,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="text here"
+                android:text="بیمه گزار گرامی شناسه پرداخت حق بیمه تا لحظاتی دیگر برای شما ارسال می شود که با انتخاب گزینه ی 'پرداخت حق بیمه' از منوی سمت چپ نسب به پرداخت آن اقدام نمایید."
                 android:textColor="#673AB7"
-                android:textSize="25dp" />
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
