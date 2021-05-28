@@ -215,6 +215,7 @@ public class BodyInsurance_ConfirmFragment extends Fragment {
                 Log.e("response", " " + response.body().getCode());
                 if (!response.body().getCode().equals("5")) {
                     StaticFun.alertDialog_connectionFail(getContext());
+                    progressDialog.dismiss();
                 } else {
                     progressDialog.dismiss();
                     trackingCode();
@@ -226,8 +227,9 @@ public class BodyInsurance_ConfirmFragment extends Fragment {
             @Override
             public void onFailure(Call<RequestResponse> call, Throwable t) {
                 Log.e("response", " " + t.getMessage());
+                
                 progressDialog.dismiss();
-                trackingCode();
+
             }
         });
     }
