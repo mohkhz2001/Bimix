@@ -1,7 +1,7 @@
 package com.mohammadkz.bimix.Model;
 
 public class User {
-    private String ID, auth, name, password, idCardImage, birthdayDate, phoneNumber, idCard;
+    private String ID, auth, name, password, idCardImage, birthdayDate, phoneNumber, idCard , point;
 
     public User(String ID, String auth, String name, String phoneNumber) {
         this.ID = ID;
@@ -18,6 +18,14 @@ public class User {
         this.name = name;
         this.password = password;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(String point) {
+        this.point = point;
     }
 
     public String getID() {
