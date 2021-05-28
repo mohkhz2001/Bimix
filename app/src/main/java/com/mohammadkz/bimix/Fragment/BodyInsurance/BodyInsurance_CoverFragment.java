@@ -81,14 +81,13 @@ public class BodyInsurance_CoverFragment extends Fragment {
 
     private void setAdapter() {
 
-        covers.add(new Cover("غرامت عدم استفاده از خودرو در زمان تعمیر"));
-        covers.add(new Cover("نوسان قیمت وسیله نقلیه تا 25 درصد"));
-        covers.add(new Cover("نوسان قیمت وسیله نقلیه تا 50 درصد"));
-        covers.add(new Cover("نوسان قیمت وسیله نقلیه تا 100 درصد"));
-        covers.add(new Cover("سرقت درجای کلیه قطعات خودرو"));
-        covers.add(new Cover("بلایای طبیعی"));
-        covers.add(new Cover("کشیدن میخ و اشیای مشابه بر روی بدنه خودرو"));
-        covers.add(new Cover("خارج از کشور"));
+        covers.add(new Cover("غرامت عدم استفاده از خودرو در زمان تعمیر", "پرداخت غرامت در زمان تعمیر خودرو در نمایندگی های مجاز"));
+        covers.add(new Cover("نوسان قیمت وسیله نقلیه تا 25 درصد", "اگر قیمت خودرو افزایش پیدا کن تا 25 درصد قیمت خودرود که در بیمه نامه قید شده نیاز به الحاقیه نیست."));
+        covers.add(new Cover("نوسان قیمت وسیله نقلیه تا 50 درصد", "اگر قیمت خودرو افزایش پیدا کن تا 50 درصد قیمت خودرود که در بیمه نامه قید شده نیاز به الحاقیه نیست."));
+        covers.add(new Cover("نوسان قیمت وسیله نقلیه تا 100 درصد", "اگر قیمت خودرو افزایش پیدا کن تا 100 درصد قیمت خودرود که در بیمه نامه قید شده نیاز به الحاقیه نیست."));
+        covers.add(new Cover("سرقت درجای کلیه قطعات خودرو", "سرقت قطعات خودرو"));
+        covers.add(new Cover("بلایای طبیعی", ""));
+        covers.add(new Cover("کشیدن میخ و اشیای مشابه بر روی بدنه خودرو", ""));
 
 
         ChooseBoxAdapter chooseBoxAdapter = new ChooseBoxAdapter(getContext(), covers);
