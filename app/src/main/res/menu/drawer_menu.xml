@@ -21,6 +21,10 @@
             android:id="@+id/nav_profile"
             android:title="حساب کاربری" />
 
+        <item
+            android:id="@+id/nav_pay"
+            android:title="پرداخت حق بیمه نامه" />
+
 
     </group>
 
