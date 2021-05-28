@@ -1,10 +1,14 @@
 package com.mohammadkz.bimix.API;
 
 
+import androidx.cardview.widget.CardView;
+
 import com.mohammadkz.bimix.Model.HistoryInsuranceResponse;
 import com.mohammadkz.bimix.Model.InsuranceResponse;
 import com.mohammadkz.bimix.Model.LoginResponse;
 import com.mohammadkz.bimix.Model.RequestResponse;
+import com.mohammadkz.bimix.Model.UpdateResponse;
+import com.mohammadkz.bimix.Model.User;
 
 import java.util.List;
 
@@ -48,7 +52,46 @@ public interface ApiConfig {
     @FormUrlEncoded
     @POST("getUserInsurance.php")
     Call<List<InsuranceResponse>> req_getUserInsurance(@Field("id") String id,
-                                    @Field("auth") String auth
+                                                       @Field("auth") String auth
+
+    );
+
+    @FormUrlEncoded
+    @POST("updatePayStatus.php")
+    Call<UpdateResponse> payStatus(@Field("userAuth") String userAuth,
+                                   @Field("status") String status,
+                                   @Field("trackingCode") String trackingCode,
+                                   @Field("kind") String kind
+
+    );
+
+    @FormUrlEncoded
+    @POST("third_party.php")
+    Call<RequestResponse> req_thirdInsurance(@Field("ID") String ID,
+                                             @Field("endDate") String endDate,
+                                             @Field("lastCompany") String lastCompany,
+                                             @Field("useFor") String useFor,
+                                             @Field("pic1") String pic1,
+                                             @Field("pic2") String pic2,
+                                             @Field("pic3") String pic3,
+                                             @Field("trackingCode") String trackingCode,
+                                             @Field("userAuth") String userAuth,
+                                             @Field("code") String insuranceId,
+                                             @Field("backCertificate") String backCertificate,
+                                             @Field("onCertificate") String onCertificate,
+                                             @Field("date") String date
+    );
+
+    @FormUrlEncoded
+    @POST("getUserProfile.php")
+    Call<User> getUser(@Field("auth") String auth);
+
+    @FormUrlEncoded
+    @POST("updateProfile.php")
+    Call<LoginResponse> updateUser(@Field("auth") String auth,
+                                   @Field("idCard_image") String idCard_image,
+                                   @Field("idCard") String idCard,
+                                   @Field("birthdayDate") String birthdayDate
 
     );
 
