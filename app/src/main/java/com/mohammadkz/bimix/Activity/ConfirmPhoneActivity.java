@@ -30,6 +30,7 @@ import com.mohammadkz.bimix.R;
 
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -40,8 +41,6 @@ import retrofit2.Response;
 public class ConfirmPhoneActivity extends AppCompatActivity {
 
     int codeToConfirm;
-    private static final SecureRandom secureRandom = new SecureRandom(); //threadsafe
-    private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder(); //threadsafe
     User user;
 
     TextInputEditText code1, code2, code3, code4;
@@ -229,7 +228,7 @@ public class ConfirmPhoneActivity extends AppCompatActivity {
                         activeLayout();
                     } else if (codeToConfirm == Integer.parseInt(input)) { // if input correct
                         // if ok
-                        generateAuth();
+
                         completeRegister();
                     } else if (codeToConfirm != Integer.parseInt(input)) { // if input not-correct
                         Toast.makeText(getApplicationContext(), "کد وارد شده اشتباه می باشد. کد دیگری برای شما ارسال شد.", Toast.LENGTH_SHORT).show();
@@ -284,18 +283,18 @@ public class ConfirmPhoneActivity extends AppCompatActivity {
     // send to DB
     private void completeRegister() {
         request = AppConfig.getRetrofit().create(ApiConfig.class);
-
-        Call<LoginResponse> send = request.SignUp(user.getPhoneNumber(), user.getName(), user.getPassword(), user.getAuth());
+        String hash = md5(user.getPassword());
+        Call<LoginResponse> send = request.SignUp(user.getPhoneNumber(), user.getName(), hash);
         send.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                Log.e("response", " " + response);
-                Log.e("code", " " + response.body().getCode());
-                sharedPreferences();
 
-                Intent intent = new Intent(ConfirmPhoneActivity.this, SplashScreenConfirmActivity.class);
-                startActivity(intent);
-                finish();
+                if (response.body().getCode().equals("1")) {
+                    response(hash);
+                } else {
+                    StaticFun.alertDialog_connectionFail(getApplicationContext());
+                }
+
             }
 
             @Override
@@ -308,11 +307,17 @@ public class ConfirmPhoneActivity extends AppCompatActivity {
 
     }
 
-    // generate auth code
-    private void generateAuth() {
-        byte[] randomBytes = new byte[24];
-        secureRandom.nextBytes(randomBytes);
-        user.setAuth(base64Encoder.encodeToString(randomBytes));
+    private void response(String pass) {
+        sharedPreferences();
+        start();
+        setUserLogin(pass);
+
+    }
+
+    private void start() {
+        Intent intent = new Intent(ConfirmPhoneActivity.this, SplashScreenConfirmActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     // save user to login auto
@@ -392,6 +397,41 @@ public class ConfirmPhoneActivity extends AppCompatActivity {
         code4.setEnabled(true);
         reSend.setEnabled(true);
         confirm.setEnabled(true);
+    }
+
+    // hashing password
+    public String md5(String password) {
+        try {
+
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(password.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+
+            return hexString.toString();
+
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+
+    }
+
+    //set user login info to share preferences
+    private void setUserLogin(String pass) {
+        SharedPreferences sh = getSharedPreferences("userLogin", MODE_PRIVATE);
+        Gson gson = new Gson();
+        User user = new User();
+        user.setPassword(pass);
+        user.setPhoneNumber(this.user.getPhoneNumber());
+        String userToTransfer = gson.toJson(user);
+        SharedPreferences.Editor myEdit = sh.edit();
+        myEdit.putString("userLogin", userToTransfer);
+        myEdit.commit();
     }
 
 }
