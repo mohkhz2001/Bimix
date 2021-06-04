@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -41,11 +43,13 @@ public class BodyInsurance_SendFragment extends Fragment {
 
     View view;
     BodyInsurance bodyInsurance;
-    Button on, back, next;
+    Button next;
+    ImageView on, back;
     String mediaPath;
     ProgressDialog progressDialog;
     String Base = null;
     int n = 0;
+    Bitmap pic1, pic2;
 
 
     public BodyInsurance_SendFragment(BodyInsurance bodyInsurance) {
@@ -99,6 +103,8 @@ public class BodyInsurance_SendFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                base64(); // convert the pics to base64
+
                 ((BodyInsuranceActivity) getActivity()).setSeekBar(6);
                 BodyInsurance_ConfirmFragment bodyInsurance_confirmFragment = new BodyInsurance_ConfirmFragment(bodyInsurance);
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -113,9 +119,10 @@ public class BodyInsurance_SendFragment extends Fragment {
         try {
             // When an Image is picked
             if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
-
+                progressDialog.show();
                 // Get the Image from data
                 Uri selectedImage = data.getData();
+
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                 Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -125,31 +132,30 @@ public class BodyInsurance_SendFragment extends Fragment {
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
 
-                // Set the Image in ImageView for Previewing the Media
-//                imgView.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
-                String base64 = getBase64(Uri.parse(mediaPath));
-                Base = base64;
-                Log.i("test", " " + base64);
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                Bitmap bitmap = BitmapFactory.decodeFile(mediaPath, bmOptions);
+
 
                 if (n == 1) {
-                    bodyInsurance.setOnCarCard(base64);
+                    on.setImageBitmap(bitmap);
+                    pic1 = bitmap;
                 } else {
-                    bodyInsurance.setBackOnCarCard(base64);
+                    back.setImageBitmap(bitmap);
+                    pic2 = bitmap;
                 }
+
                 cursor.close();
 
             } else if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
 
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream.toByteArray();
-                String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
                 if (n == 1) {
-                    bodyInsurance.setOnCarCard(encoded);
+                    on.setImageBitmap(bitmap);
+                    pic1 = bitmap;
                 } else {
-                    bodyInsurance.setBackOnCarCard(encoded);
+                    back.setImageBitmap(bitmap);
+                    pic2 = bitmap;
                 }
 
             } else {
@@ -161,18 +167,22 @@ public class BodyInsurance_SendFragment extends Fragment {
             Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
         }
 
+        progressDialog.dismiss();
+
     }
 
-    private String getBase64(Uri uri) {
-        Bitmap bm = BitmapFactory.decodeFile(uri.toString());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 100, baos); // bm is the bitmap object
-        byte[] b = baos.toByteArray();
+    // convert to base64 ( after press next )
+    private void base64() {
+        progressDialog.show();
 
-        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-        return encodedImage;
+        DownloadImagesTask downloadImagesTask = new DownloadImagesTask();
+        bodyInsurance.setOnCarCard(downloadImagesTask.doInBackground(pic1));
+        bodyInsurance.setBackOnCarCard(downloadImagesTask.doInBackground(pic2));
+
+        progressDialog.dismiss();
     }
 
+    // bottom choose => camera or file(gallery)
     public void bottomSheetChooser() {
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
@@ -231,6 +241,28 @@ public class BodyInsurance_SendFragment extends Fragment {
         TedPermission.with(getContext())
                 .setPermissionListener(permissionListener)
                 .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).check();
+    }
+
+    // run in the background
+    private class DownloadImagesTask extends AsyncTask<Bitmap, Void, String> {
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+
+        @Override
+        protected String doInBackground(Bitmap... bitmaps) {
+            progressDialog.setMessage("a");
+            progressDialog.show();
+            bitmaps[0] = Bitmap.createScaledBitmap(bitmaps[0], 700, 700, false);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmaps[0].compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+            String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            Log.e("tr", " " + encoded);
+            progressDialog.dismiss();
+            return encoded;
+        }
+
+
     }
 
 }
