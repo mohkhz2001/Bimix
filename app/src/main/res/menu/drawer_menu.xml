@@ -8,22 +8,37 @@
         <item
             android:id="@+id/nav_issuance"
             android:checked="true"
+            android:icon="@drawable/request"
             android:title="درخواست صدور" />
 
         <item
             android:id="@+id/nav_price"
+            android:icon="@drawable/price"
             android:title="نرخ دهی" />
         <item
             android:id="@+id/history"
+            android:icon="@drawable/history"
             android:title="تاریخچه" />
 
         <item
             android:id="@+id/nav_profile"
+            android:icon="@drawable/account"
             android:title="حساب کاربری" />
 
         <item
             android:id="@+id/nav_pay"
+            android:icon="@drawable/payment"
             android:title="پرداخت حق بیمه نامه" />
+
+        <item
+            android:id="@+id/about"
+            android:icon="@drawable/about"
+            android:title="درباره ی ما" />
+
+        <item
+            android:id="@+id/contact"
+            android:icon="@drawable/contact"
+            android:title="ارتباط باما" />
 
 
     </group>
