@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -45,6 +46,7 @@ public class HistoryFragment extends Fragment {
     private User user;
     ProgressDialog progressDialog;
     ApiConfig request;
+    TextView no_req;
 //    List<InsuranceResponse> insuranceResponseList;
 
     public HistoryFragment(User user) {
@@ -73,6 +75,7 @@ public class HistoryFragment extends Fragment {
 
     private void initViews() {
         list = view.findViewById(R.id.list);
+        no_req = view.findViewById(R.id.no_req);
     }
 
     private void controllerView() {
@@ -86,9 +89,15 @@ public class HistoryFragment extends Fragment {
         getData.enqueue(new Callback<List<InsuranceResponse>>() {
             @Override
             public void onResponse(Call<List<InsuranceResponse>> call, Response<List<InsuranceResponse>> response) {
-                Log.e("responce", " " + response.body().size());
-                setAdapter(response.body());
-                System.out.println();
+                if (response.body().size() !=0){
+                    Log.e("responce", " " + response.body().size());
+                    setAdapter(response.body());
+                    System.out.println();
+                    no_req.setVisibility(View.GONE);
+                }else {
+                    no_req.setVisibility(View.VISIBLE);
+                }
+
             }
 
             @Override
