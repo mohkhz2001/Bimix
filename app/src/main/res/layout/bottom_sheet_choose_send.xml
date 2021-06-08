@@ -1,39 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bottomSheetContainer"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:gravity="center"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_bottom_sheet"
-    android:layout_height="wrap_content">
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingTop="5dp"
+    android:paddingBottom="10dp">
 
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/ic_camera"
-        android:scaleType="fitXY"
-        android:id="@+id/camera"
-        android:background="@color/smsp_transparent_color"/>
+    <TextView
+        android:id="@+id/txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="طریقه ی ارسال را انتخاب نمایید:"
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/gallery"
-        android:layout_marginLeft="30dp"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/ic_file"
-        android:background="@color/smsp_transparent_color"
-        android:scaleType="fitXY"
-        />
 
-    <ImageButton
-        android:id="@+id/cancel"
-        android:layout_marginLeft="30dp"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/ic_cancel"
-        android:background="@color/smsp_transparent_color"
-        android:scaleType="fitXY"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/camera"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/smsp_transparent_color"
+                android:scaleType="fitXY"
+                android:src="@drawable/camera" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="دوربین"
+                android:textColor="#000"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/gallery"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/smsp_transparent_color"
+                android:scaleType="fitXY"
+                android:src="@drawable/gallery" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="گالری"
+                android:textColor="#000"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/cancel"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/smsp_transparent_color"
+                android:scaleType="fitXY"
+                android:src="@drawable/cancel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="انصراف "
+                android:textColor="#000"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
