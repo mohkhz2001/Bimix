@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText name, phoneNumber, password, re_password;
+    EditText firstName, lastName, phoneNumber, password, re_password;
     Button sendCode;
 
     int code;
@@ -39,7 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     // init component
     private void initViews() {
-        name = findViewById(R.id.name);
+        firstName = findViewById(R.id.firstName);
+        lastName = findViewById(R.id.lastName);
         password = findViewById(R.id.password);
         re_password = findViewById(R.id.re_password);
         phoneNumber = findViewById(R.id.phoneNumber);
@@ -55,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
                 // check re-pass & pass are the same and is check the connection
                 if (password.getText().toString().equals(re_password.getText().toString()) && isNetworkAvailable()) {
                     sendCode();
-                    transferData(name.getText().toString(), phoneNumber.getText().toString(), password.getText().toString());
+                    transferData(firstName.getText().toString() + " " + lastName.getText().toString(), phoneNumber.getText().toString(), password.getText().toString());
                 } else {
                     StaticFun.alertDialog_connectionFail(SignUpActivity.this);
                 }
@@ -95,14 +96,6 @@ public class SignUpActivity extends AppCompatActivity {
         // this will convert any number sequence into 6 character.
 
         return Integer.valueOf(String.format("%04d", Integer.parseInt(number)));
-    }
-
-    // just for test application
-    private void setValues() {
-        name.setText("mehdi");
-        password.setText("admin");
-        re_password.setText("admin");
-        phoneNumber.setText("09388209270");
     }
 
     // check internet connection
