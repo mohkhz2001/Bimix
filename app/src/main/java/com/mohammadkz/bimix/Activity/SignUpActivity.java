@@ -54,11 +54,16 @@ public class SignUpActivity extends AppCompatActivity {
 //                setValues();//will be remove and used just for test
 
                 // check re-pass & pass are the same and is check the connection
-                if (password.getText().toString().equals(re_password.getText().toString()) && isNetworkAvailable()) {
+                if (password.getText().toString().equals(re_password.getText().toString()) && isNetworkAvailable() && checkValue()) {
                     sendCode();
                     transferData(firstName.getText().toString() + " " + lastName.getText().toString(), phoneNumber.getText().toString(), password.getText().toString());
                 } else {
-                    StaticFun.alertDialog_connectionFail(SignUpActivity.this);
+                    if (checkValue()) {
+                        Toast.makeText(SignUpActivity.this, "وارد کردن همه ی موارد الزامی است", Toast.LENGTH_SHORT).show();
+                    } else if (isNetworkAvailable())
+                        StaticFun.alertDialog_connectionFail(SignUpActivity.this);
+                    else if (password.getText().toString().equals(re_password.getText().toString()))
+                        Toast.makeText(SignUpActivity.this, "پسوورد های وارد شده یکی نمی باشند", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -109,6 +114,13 @@ public class SignUpActivity extends AppCompatActivity {
         // if no network is available networkInfo will be null
         // otherwise check if we are connected
         return networkInfo != null && networkInfo.isConnected();
+    }
+
+    private boolean checkValue() {
+        if (firstName.getText().length() < 1 || lastName.getText().length() < 1 || phoneNumber.getText().length() < 1 || password.getText().length() < 1 || re_password.getText().length() < 1)
+            return false;
+        else
+            return true;
     }
 
 }
