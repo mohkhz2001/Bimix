@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.mohammadkz.bimix.API.ApiConfig;
 import com.mohammadkz.bimix.API.AppConfig;
 import com.mohammadkz.bimix.StaticFun;
@@ -283,14 +284,17 @@ public class ConfirmPhoneActivity extends AppCompatActivity {
     // send to DB
     private void completeRegister() {
         request = AppConfig.getRetrofit().create(ApiConfig.class);
-        String hash = md5(user.getPassword());
-        Call<LoginResponse> send = request.SignUp(user.getPhoneNumber(), user.getName(), hash);
+        user.setPassword(md5(user.getPassword()));
+        Call<LoginResponse> send = request.SignUp(user.getPhoneNumber(), user.getName(), user.getPassword());
         send.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
                 if (response.body().getCode().equals("1")) {
-                    response(hash);
+                    user.setAuth(response.body().getAuth());
+                    response();
+                } else if (response.body().getCode().equals("2")) {
+                    StaticFun.alertDialog_error_repetitious(getApplicationContext());
                 } else {
                     StaticFun.alertDialog_connectionFail(getApplicationContext());
                 }
@@ -307,10 +311,10 @@ public class ConfirmPhoneActivity extends AppCompatActivity {
 
     }
 
-    private void response(String pass) {
+    private void response() {
         sharedPreferences();
+        setUserLogin(user.getPassword());
         start();
-        setUserLogin(pass);
 
     }
 
@@ -320,7 +324,7 @@ public class ConfirmPhoneActivity extends AppCompatActivity {
         finish();
     }
 
-    // save user to login auto
+    // save user info
     private void sharedPreferences() {
         SharedPreferences sh = getSharedPreferences("user_info", MODE_PRIVATE);
         Gson gson = new Gson();
