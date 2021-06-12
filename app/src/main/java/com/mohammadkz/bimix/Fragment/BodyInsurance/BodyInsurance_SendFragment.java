@@ -12,9 +12,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -24,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -35,6 +38,10 @@ import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -47,7 +54,7 @@ public class BodyInsurance_SendFragment extends Fragment {
     ImageView on, back;
     String mediaPath;
     ProgressDialog progressDialog;
-    String Base = null;
+    String currentPhotoPath;
     int n = 0;
     Bitmap pic1, pic2;
 
@@ -65,7 +72,7 @@ public class BodyInsurance_SendFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_body_insurance_send, container, false);
 
         progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Uploading...");
+        progressDialog.setMessage("لطفا منتظر باشید...");
 
         initViews();
         controllerViews();
@@ -103,12 +110,21 @@ public class BodyInsurance_SendFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                base64(); // convert the pics to base64
+                if (pic1 != null && pic2 != null) {
+                    base64(); // convert the pics to base64
 
-                ((BodyInsuranceActivity) getActivity()).setSeekBar(6);
-                BodyInsurance_ConfirmFragment bodyInsurance_confirmFragment = new BodyInsurance_ConfirmFragment(bodyInsurance);
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, bodyInsurance_confirmFragment).commit();
+                    ((BodyInsuranceActivity) getActivity()).setSeekBar(6);
+                    BodyInsurance_ConfirmFragment bodyInsurance_confirmFragment = new BodyInsurance_ConfirmFragment(bodyInsurance);
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayout, bodyInsurance_confirmFragment).commit();
+                } else {
+                    if (pic1 == null) {
+                        Toast.makeText(getContext(), "عکس روی کارت خودرو نمی تواند خالی باشد.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "عکس پشت کارت خودرو نمی تواند خالی باشد.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
         });
     }
@@ -146,9 +162,9 @@ public class BodyInsurance_SendFragment extends Fragment {
 
                 cursor.close();
 
-            } else if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
+            } else if (requestCode == 0 && resultCode == RESULT_OK && null != currentPhotoPath) {
 
-                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                Bitmap bitmap = setPic();
 
                 if (n == 1) {
                     on.setImageBitmap(bitmap);
@@ -185,15 +201,14 @@ public class BodyInsurance_SendFragment extends Fragment {
     // bottom choose => camera or file(gallery)
     public void bottomSheetChooser() {
 
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
-        View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_choose_send, (LinearLayout) view.findViewById(R.id.bottomSheetContainer));
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme);
+        View bottomSheetView = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet_choose_send, (RelativeLayout) view.findViewById(R.id.bottomSheetContainer));
 
         bottomSheetView.findViewById(R.id.camera).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePicture, 0);//zero can be replaced with any action code (called requestCode)
+                dispatchTakePictureIntent();
 
                 bottomSheetDialog.dismiss();
             }
@@ -221,6 +236,75 @@ public class BodyInsurance_SendFragment extends Fragment {
 
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
+    }
+
+    // open camera to take photo ==>  save full size
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getActivity(),
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, 0);
+            }
+        }
+    }
+
+    // create the file directory
+    private File createImageFile() throws Exception {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    // convert uri to bitmap
+    private Bitmap setPic() {
+        // Get the dimensions of the View
+        int targetW = 700;
+        int targetH = 700;
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+
+        BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.max(1, Math.min(photoW / targetW, photoH / targetH));
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+        return bitmap;
     }
 
     // runtime permission

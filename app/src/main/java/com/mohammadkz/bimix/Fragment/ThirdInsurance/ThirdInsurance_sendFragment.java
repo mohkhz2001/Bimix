@@ -2,16 +2,20 @@ package com.mohammadkz.bimix.Fragment.ThirdInsurance;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -19,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -30,6 +36,11 @@ import com.mohammadkz.bimix.Model.ThirdInsurance;
 import com.mohammadkz.bimix.R;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -39,10 +50,13 @@ public class ThirdInsurance_sendFragment extends Fragment {
 
     View view;
     private ThirdInsurance thirdInsurance;
-    Button insurancePic, onCarCardPic, backCarCardPic, onCertificatePic, backCertificatePic;
+    ImageButton insurancePic, onCarCardPic, backCarCardPic, onCertificatePic, backCertificatePic;
     Button send;
     ProgressDialog progressDialog;
     String Base = null, mediaPath;
+    Bitmap insurancePic_bitmap, onCarCardPic_bitmap, backCarCardPic_bitmap, onCertificatePic_bitmap, backCertificatePic_bitmap;
+    String currentPhotoPath;
+
     int n = 0;
 
     public ThirdInsurance_sendFragment(ThirdInsurance thirdInsurance) {
@@ -58,7 +72,7 @@ public class ThirdInsurance_sendFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_third_insurance_send, container, false);
 
         progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Uploading...");
+        progressDialog.setMessage("لطفا منتظر باشید...");
 
         permission();
         initViews();
@@ -82,7 +96,7 @@ public class ThirdInsurance_sendFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (checkValue()) {
-                    Log.e("test", " " + thirdInsurance.getInsurancePic());
+                    base64(); // convert the pics to base64
 
                     ((ThirdInsuranceActivity) getActivity()).setSeekBar(3);
 
@@ -135,6 +149,7 @@ public class ThirdInsurance_sendFragment extends Fragment {
         });
     }
 
+    // bottom choose => camera or file(gallery)
     public void bottomSheetChooser() {
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
@@ -144,11 +159,14 @@ public class ThirdInsurance_sendFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePicture, 0);//zero can be replaced with any action code (called requestCode)
+                dispatchTakePictureIntent();
+
+//                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(takePicture, 0);//zero can be replaced with any action code (called requestCode)
 
                 bottomSheetDialog.dismiss();
             }
+
         });
 
         bottomSheetView.findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
@@ -175,6 +193,75 @@ public class ThirdInsurance_sendFragment extends Fragment {
         bottomSheetDialog.show();
     }
 
+    // open camera to take photo ==>  save full size
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getActivity(),
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, 0);
+            }
+        }
+    }
+
+    // create the file directory
+    private File createImageFile() throws Exception {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    // convert uri to bitmap
+    private Bitmap setPic() {
+        // Get the dimensions of the View
+        int targetW = 700;
+        int targetH = 700;
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+
+        BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.max(1, Math.min(photoW / targetW, photoH / targetH));
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+        return bitmap;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -193,47 +280,52 @@ public class ThirdInsurance_sendFragment extends Fragment {
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
 
-                // Set the Image in ImageView for Previewing the Media
-//                imgView.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
-                String base64 = getBase64(Uri.parse(mediaPath));
-                Base = base64;
-                Log.i("test", " " + base64);
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                Bitmap bitmap = BitmapFactory.decodeFile(mediaPath, bmOptions);
 
                 if (n == 1) {
-                    thirdInsurance.setInsurancePic(base64);
+                    insurancePic.setImageBitmap(bitmap);
+                    insurancePic_bitmap = bitmap;
                 } else if (n == 2) {
-                    thirdInsurance.setOnCarCardPic(base64);
+                    onCarCardPic.setImageBitmap(bitmap);
+                    onCarCardPic_bitmap = bitmap;
                 } else if (n == 3) {
-                    thirdInsurance.setBackCarCardPic(base64);
+                    backCarCardPic.setImageBitmap(bitmap);
+                    backCarCardPic_bitmap = bitmap;
                 } else if (n == 4) {
-                    thirdInsurance.setOnCertificatePic(base64);
+                    onCertificatePic.setImageBitmap(bitmap);
+                    onCertificatePic_bitmap = bitmap;
                 } else if (n == 5) {
-                    thirdInsurance.setBackCertificatePic(base64);
+                    backCertificatePic.setImageBitmap(bitmap);
+                    backCertificatePic_bitmap = bitmap;
                 } else {
                     Log.e("error ", " to save (number 1)");
                 }
                 cursor.close();
 
-            } else if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
+            } else if (requestCode == 0 && resultCode == RESULT_OK && currentPhotoPath != null) {
 
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream.toByteArray();
-                String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+//                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+
+                Bitmap bitmap = setPic();
 
                 if (n == 1) {
-                    thirdInsurance.setInsurancePic(encoded);
+                    insurancePic.setImageBitmap(bitmap);
+                    insurancePic_bitmap = bitmap;
                 } else if (n == 2) {
-                    thirdInsurance.setOnCarCardPic(encoded);
+                    onCarCardPic.setImageBitmap(bitmap);
+                    onCarCardPic_bitmap = bitmap;
                 } else if (n == 3) {
-                    thirdInsurance.setBackCarCardPic(encoded);
+                    backCarCardPic.setImageBitmap(bitmap);
+                    backCarCardPic_bitmap = bitmap;
                 } else if (n == 4) {
-                    thirdInsurance.setOnCertificatePic(encoded);
+                    onCertificatePic.setImageBitmap(bitmap);
+                    onCertificatePic_bitmap = bitmap;
                 } else if (n == 5) {
-                    thirdInsurance.setBackCertificatePic(encoded);
+                    backCertificatePic.setImageBitmap(bitmap);
+                    backCertificatePic_bitmap = bitmap;
                 } else {
-
+                    Log.e("error ", " to save (number 1)");
                 }
 
             } else {
@@ -245,16 +337,6 @@ public class ThirdInsurance_sendFragment extends Fragment {
             Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
         }
 
-    }
-
-    private String getBase64(Uri uri) {
-        Bitmap bm = BitmapFactory.decodeFile(uri.toString());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 100, baos); // bm is the bitmap object
-        byte[] b = baos.toByteArray();
-
-        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-        return encodedImage;
     }
 
     // runtime permission
@@ -277,12 +359,50 @@ public class ThirdInsurance_sendFragment extends Fragment {
                 .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).check();
     }
 
+    // check all image btn
     private boolean checkValue() {
-        if (thirdInsurance.getInsurancePic() == null || thirdInsurance.getBackCarCardPic() == null || thirdInsurance.getBackCertificatePic() == null ||
-                thirdInsurance.getOnCarCardPic() == null || thirdInsurance.getOnCertificatePic() == null) {
+        if (insurancePic_bitmap == null || onCarCardPic == null || backCarCardPic == null ||
+                onCertificatePic_bitmap == null || backCertificatePic_bitmap == null) {
             return false;
         } else
             return true;
     }
 
+    // convert to base64 ( after press next )
+    private void base64() {
+        progressDialog.show();
+
+        DownloadImagesTask downloadImagesTask = new DownloadImagesTask();
+
+        thirdInsurance.setInsurancePic(downloadImagesTask.doInBackground(insurancePic_bitmap));
+        thirdInsurance.setOnCarCardPic(downloadImagesTask.doInBackground(onCarCardPic_bitmap));
+        thirdInsurance.setBackCarCardPic(downloadImagesTask.doInBackground(backCarCardPic_bitmap));
+        thirdInsurance.setOnCertificatePic(downloadImagesTask.doInBackground(onCertificatePic_bitmap));
+        thirdInsurance.setBackCertificatePic(downloadImagesTask.doInBackground(backCertificatePic_bitmap));
+
+        progressDialog.dismiss();
+    }
+
+    // run in the background
+    // convert to base64
+    private class DownloadImagesTask extends AsyncTask<Bitmap, Void, String> {
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+
+        @Override
+        protected String doInBackground(Bitmap... bitmaps) {
+            progressDialog.setMessage("a");
+            progressDialog.show();
+            bitmaps[0] = Bitmap.createScaledBitmap(bitmaps[0], 700, 700, false);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmaps[0].compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+            String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            Log.e("tr", " " + encoded);
+            progressDialog.dismiss();
+            return encoded;
+        }
+
+
+    }
 }
