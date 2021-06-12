@@ -18,6 +18,8 @@ public class InsuranceResponse {
     String status;
     @SerializedName("payStatus")
     private String payed;
+    @SerializedName("describe")
+    private String describe;
 
     public InsuranceResponse(String kind, String date, String trackingCode, String link, String payCode, String status) {
         this.kind = kind;
@@ -30,6 +32,14 @@ public class InsuranceResponse {
 
     public InsuranceResponse() {
 
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
     public String getPayed() {
