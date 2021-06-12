@@ -92,7 +92,9 @@ public class StartUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                StaticFun.alertDialog_connectionFail(getApplicationContext());
+                progressDialog.dismiss();
+                ChooseSignUp_LoginFragment chooseSignUp_loginFragment = new ChooseSignUp_LoginFragment();
+                fragmentTransaction.replace(R.id.frameLayout, chooseSignUp_loginFragment).commit();
             }
         });
     }
