@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import com.animsh.animatedcheckbox.AnimatedCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
@@ -95,19 +96,24 @@ public class BodyInsurance_VisitFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                setValue();
+                if (ourPlace.isChecked() || yourPlace.isChecked()) {
+                    setValue();
 
-                ((BodyInsuranceActivity) getActivity()).setSeekBar(5);
+                    ((BodyInsuranceActivity) getActivity()).setSeekBar(5);
 
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                BodyInsurance_SendFragment bodyInsurance_sendFragment = new BodyInsurance_SendFragment(bodyInsurance);
-                fragmentTransaction.replace(R.id.frameLayout, bodyInsurance_sendFragment).commit();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    BodyInsurance_SendFragment bodyInsurance_sendFragment = new BodyInsurance_SendFragment(bodyInsurance);
+                    fragmentTransaction.replace(R.id.frameLayout, bodyInsurance_sendFragment).commit();
+                } else {
+                    Toast.makeText(getContext(), "باید یک مورد را انتخاب نمایید.", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
 
     }
 
+    // set day and hour
     private void setNumberPickerValue() {
 
         hour.setMinValue(0);
