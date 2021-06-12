@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setMessage("منتظر باشید...");
 
         request = AppConfig.getRetrofit().create(ApiConfig.class);
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         myEdit.putString("user_info", userToTransfer);
         myEdit.commit();
         System.out.println();
-
+        activeLayout();
         Intent intent = new Intent(LoginActivity.this, MainPageActivity.class);
         startActivity(intent);
         finish();
