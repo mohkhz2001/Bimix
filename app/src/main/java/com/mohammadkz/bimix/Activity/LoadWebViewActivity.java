@@ -12,6 +12,7 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.github.lzyzsd.jsbridge.BridgeHandler;
@@ -27,6 +28,7 @@ public class LoadWebViewActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeContainer;
     MaterialToolbar topAppBar;
     SpinKitView spin_kit;
+    ImageView nav_image;
     int choose;
     String url;
 
@@ -51,11 +53,15 @@ public class LoadWebViewActivity extends AppCompatActivity {
         swipeContainer = findViewById(R.id.swipeContainer);
         topAppBar = findViewById(R.id.topAppBar);
         spin_kit = findViewById(R.id.spin_kit);
+        nav_image = findViewById(R.id.nav_image);
     }
 
     private void controllerViews() {
-        topAppBar.setNavigationOnClickListener(v -> {
-            finish();
+        nav_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
         });
     }
 
