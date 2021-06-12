@@ -58,6 +58,7 @@ public class BodyInsurance_ConfirmFragment extends Fragment {
     Button send;
     User user;
     ProgressDialog progressDialog;
+    CardView card_lastCompany, card_insuranceID;
     ApiConfig request;
 
     public BodyInsurance_ConfirmFragment(BodyInsurance bodyInsurance) {
@@ -98,6 +99,8 @@ public class BodyInsurance_ConfirmFragment extends Fragment {
         birthdayDate_txt = view.findViewById(R.id.birthdayDate_txt);
         anotherLayout = view.findViewById(R.id.anotherLayout);
         send = view.findViewById(R.id.send);
+        card_lastCompany = view.findViewById(R.id.card_lastCompany);
+        card_insuranceID = view.findViewById(R.id.card_insuranceID);
     }
 
     private void controllerViews() {
@@ -180,6 +183,12 @@ public class BodyInsurance_ConfirmFragment extends Fragment {
         last_txt.setText(bodyInsurance.getLastCompany());
         number_txt.setText(bodyInsurance.getNumberInsurance());
         model_txt.setText(bodyInsurance.getCarModel());
+
+        if (bodyInsurance.getHistory().equals("بیمه بدنه دارم")) {
+            card_lastCompany.setVisibility(View.VISIBLE);
+            card_insuranceID.setVisibility(View.VISIBLE);
+        }
+
     }
 
     // wanna send req for another person
@@ -227,7 +236,7 @@ public class BodyInsurance_ConfirmFragment extends Fragment {
             @Override
             public void onFailure(Call<RequestResponse> call, Throwable t) {
                 Log.e("response", " " + t.getMessage());
-                
+
                 progressDialog.dismiss();
 
             }
