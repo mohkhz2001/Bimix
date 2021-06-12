@@ -1,6 +1,7 @@
 package com.mohammadkz.bimix.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHold
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         holder.date_req.setText(insuranceResponses.get(position).getDate());
         holder.payCode.setText(insuranceResponses.get(position).getPayCode());
+        holder.describe.setText(insuranceResponses.get(position).getDescribe());
 
         holder.trackingCode.setText(insuranceResponses.get(position).getTrackingCode());
 
@@ -50,6 +52,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHold
             holder.kind_txt.setText("بیمه بدنه");
         } else if (insuranceResponses.get(pos).getKind().equals("third_party")) {
             holder.kind_txt.setText("بیمه شخص ثالث");
+        } else if (insuranceResponses.get(pos).getKind().equals("fire_insurance")) {
+            holder.kind_txt.setText("بیمه آتش سوزی");
         }
     }
 
@@ -79,17 +83,23 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHold
             holder.get_txt.setVisibility(View.GONE);
             holder.status.setText("در حال صدور");
         } else if (insuranceResponses.get(pos).getStatus().equals("payment")) {
-            if (insuranceResponses.get(pos).getPayed() == null) {
-                holder.payed.setVisibility(View.VISIBLE);
-                holder.pay.setVisibility(View.VISIBLE);
-            } else {
-                holder.payed_txt.setVisibility(View.VISIBLE);
+            try {
+                if (insuranceResponses.get(pos).getPayed().equals("-")) {
+                    holder.payed.setVisibility(View.VISIBLE);
+                    holder.pay.setVisibility(View.VISIBLE);
+                } else {
+                    holder.payed_txt.setVisibility(View.VISIBLE);
+                }
+                holder.get.setVisibility(View.GONE);
+                holder.payCode.setVisibility(View.VISIBLE);
+                holder.payCode_txt.setVisibility(View.VISIBLE);
+                holder.get_txt.setVisibility(View.GONE);
+                holder.status.setText("منتظر پرداخت");
+            } catch (Exception e) {
+                Log.e("error ", " " + pos);
+                e.getMessage();
             }
-            holder.get.setVisibility(View.GONE);
-            holder.payCode.setVisibility(View.VISIBLE);
-            holder.payCode_txt.setVisibility(View.VISIBLE);
-            holder.get_txt.setVisibility(View.GONE);
-            holder.status.setText("منتظر پرداخت");
+
         }
     }
 
