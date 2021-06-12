@@ -31,10 +31,10 @@ public class FireInsuranceActivity extends AppCompatActivity {
     //init views
     private void initViews() {
         firstInfo = findViewById(R.id.firstInfo);
-        location = findViewById(R.id.location);
         confirmInfo = findViewById(R.id.confirmInfo);
         trackingCode = findViewById(R.id.trackingCode);
         back_nav = findViewById(R.id.back_nav);
+        location = findViewById(R.id.location);
     }
 
     //controller
@@ -52,10 +52,12 @@ public class FireInsuranceActivity extends AppCompatActivity {
                 firstInfo.setEnabled(false);
                 location.setEnabled(true);
                 break;
+
             case 3:
                 location.setEnabled(false);
                 confirmInfo.setEnabled(true);
                 break;
+
             case 4:
                 confirmInfo.setEnabled(false);
                 trackingCode.setEnabled(true);
