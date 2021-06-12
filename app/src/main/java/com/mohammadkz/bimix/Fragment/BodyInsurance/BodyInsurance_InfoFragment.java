@@ -203,7 +203,8 @@ public class BodyInsurance_InfoFragment extends Fragment {
         historyInsurance.setAdapter(historySpinnerItem);
 
 
-        String[] item_lastInsurance = {"ایران", "کوثر", "ملت", "تجارت", "البرز", "آسیا", "دی", "دانا", "ما", "سرمد", "سامان", "رازی", "دی", "سینا", "معلم", "پاسارگاد", "نوین"};
+        String[] item_lastInsurance = {"ایران", "کوثر", "ملت", "البرز", "آسیا", "دی", "دانا", "ما", "سرمد", "سامان", "رازی", "دی", "سینا", "معلم", "پاسارگاد", "نوین",
+                "پارسیان", "کارآفرین", "آرمان", "میهن", "تعاون", "آسماری", "تجارت نو"};
         ArrayAdapter<String> lastInsuranceSpinnerItem = new ArrayAdapter<>(getContext(), R.layout.spinner_item, item_lastInsurance);
         lastCompany.setAdapter(lastInsuranceSpinnerItem);
 
@@ -219,10 +220,20 @@ public class BodyInsurance_InfoFragment extends Fragment {
     }
 
     private boolean checkValues() {
-        if (bodyInsurance.getHistory() == null || bodyInsurance.getUseFor() == null) {
+        if (bodyInsurance.getHistory() == null || !bodyInsurance.getHistory().equals("بیمه بدنه ندارم") || !bodyInsurance.getHistory().equals("خودرو صفر")) {
+            if (bodyInsurance.getHistory() == null || bodyInsurance.getUseFor() == null || carModel.getText().length() < 1) {
+                return false;
+            } else
+                return true;
+        } else if (!bodyInsurance.getHistory().equals("بیمه بدنه دارم")) {
+            if (bodyInsurance.getHistory() == null || bodyInsurance.getUseFor() == null || carModel.getText() == null || insuranceID.getText().length() < 1 || bodyInsurance.getLastCompany() == null) {
+                return false;
+            } else
+                return true;
+        } else {
             return false;
-        } else
-            return true;
+        }
+
     }
 
     private void setErrorField() {
