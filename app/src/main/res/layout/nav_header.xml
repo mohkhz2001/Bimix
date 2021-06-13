@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="140dp"
     android:layout_alignParentRight="true"
     android:layout_gravity="right"
-    android:background="#5769FF"
+    android:background="#1930F6"
     android:gravity="bottom"
     android:orientation="horizontal"
     android:padding="16dp"
@@ -30,7 +31,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:text="محمدمهدی خواجه زاده"
-            android:textColor="#000"
+            android:textColor="#FFFFFF"
             android:textSize="17dp"
             android:textStyle="bold" />
 
@@ -48,7 +49,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="12000" />
+                android:text="12000"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/user_point"
@@ -57,7 +60,9 @@
                 android:layout_below="@+id/header_name"
                 android:text="کیف امتیاز:"
                 android:textColor="#3B3B3B"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
 
         </LinearLayout>
