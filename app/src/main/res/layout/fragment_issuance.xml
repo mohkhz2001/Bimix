@@ -32,6 +32,13 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_body_insurance" />
 
+            <ImageView
+                android:id="@+id/fireInsurance"
+                android:layout_width="match_parent"
+                android:layout_height="135dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_fire_insurance" />
 
             <ImageView
                 android:id="@+id/docInsurance"
@@ -43,20 +50,14 @@
 
 
             <ImageView
+                android:visibility="invisible"
+                tools:visibility="visible"
                 android:id="@+id/elevatorInsurance"
                 android:layout_width="match_parent"
                 android:layout_height="135dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_elevator_insurance" />
-
-            <ImageView
-                android:id="@+id/fireInsurance"
-                android:layout_width="match_parent"
-                android:layout_height="135dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_fire_insurance" />
 
 
         </LinearLayout>
@@ -104,7 +105,9 @@
                 android:layout_height="135dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_damage" />
+                android:src="@drawable/ic_damage"
+                android:visibility="invisible"
+                tools:visibility="visible" />
 
         </LinearLayout>
 
