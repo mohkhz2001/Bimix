@@ -30,6 +30,7 @@ import com.mohammadkz.bimix.Model.InsuranceResponse;
 import com.mohammadkz.bimix.Model.UpdateResponse;
 import com.mohammadkz.bimix.Model.User;
 import com.mohammadkz.bimix.R;
+import com.mohammadkz.bimix.StaticFun;
 
 
 import java.util.List;
@@ -64,10 +65,11 @@ public class HistoryFragment extends Fragment {
         request = AppConfig.getRetrofit().create(ApiConfig.class);
 
         progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Uploading...");
+        progressDialog.setMessage("در حال دریافت اطلاعات...");
 
         initViews();
         controllerView();
+        progressDialog.show();
         getData();
 
         return view;
@@ -84,17 +86,18 @@ public class HistoryFragment extends Fragment {
 
     private void getData() {
 
-        Call<List<InsuranceResponse>> getData = request.req_getUserInsurance(user.getID(), user.getAuth());
+        Call<List<InsuranceResponse>> getData = request.req_getUserInsurance(user.getAuth());
 
         getData.enqueue(new Callback<List<InsuranceResponse>>() {
             @Override
             public void onResponse(Call<List<InsuranceResponse>> call, Response<List<InsuranceResponse>> response) {
-                if (response.body().size() !=0){
+                progressDialog.dismiss();
+                if (response.body().size() != 0) {
                     Log.e("responce", " " + response.body().size());
                     setAdapter(response.body());
                     System.out.println();
                     no_req.setVisibility(View.GONE);
-                }else {
+                } else {
                     no_req.setVisibility(View.VISIBLE);
                 }
 
@@ -102,6 +105,8 @@ public class HistoryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<InsuranceResponse>> call, Throwable t) {
+                progressDialog.dismiss();
+                StaticFun.alertDialog_connectionFail(getContext());
                 Log.e("responce", " shiit");
             }
         });
@@ -119,9 +124,9 @@ public class HistoryFragment extends Fragment {
         historyAdapter.setOnPayedItemClickListener(new HistoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos, View v) {
-
+                progressDialog.show();
                 updatePayStatus(insuranceResponseList.get(pos));
-                refresh();
+//                refresh();
             }
         });
 
@@ -171,11 +176,12 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
                 Log.e("re", " " + response.body().getCode());
+                refresh();
             }
 
             @Override
             public void onFailure(Call<UpdateResponse> call, Throwable t) {
-                Log.e("re", " " + t.getMessage());
+                StaticFun.alertDialog_connectionFail(getContext());
             }
         });
 
