@@ -106,6 +106,22 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline17" />
 
             <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="آدرس"
+                android:textColor="@drawable/level_req"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:itemTextColor="@drawable/level_req"
+                app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+                app:layout_constraintStart_toStartOf="@+id/guideline17" />
+
+            <TextView
                 android:id="@+id/confirmInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
