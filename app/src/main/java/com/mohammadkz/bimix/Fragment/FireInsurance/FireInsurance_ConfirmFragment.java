@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.mohammadkz.bimix.API.ApiConfig;
 import com.mohammadkz.bimix.API.AppConfig;
+import com.mohammadkz.bimix.Activity.FireInsuranceActivity;
 import com.mohammadkz.bimix.Fragment.TrackingCodeFragment;
 import com.mohammadkz.bimix.Model.BodyInsurance;
 import com.mohammadkz.bimix.Model.FireInsurance;
@@ -30,6 +31,7 @@ import java.util.Random;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import saman.zamani.persiandate.PersianDate;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -73,7 +75,7 @@ public class FireInsurance_ConfirmFragment extends Fragment {
         postCode = view.findViewById(R.id.postCode);
         address = view.findViewById(R.id.address);
         confirm = view.findViewById(R.id.confirm);
-
+        area = view.findViewById(R.id.area);
     }
 
     private void controllerViews() {
@@ -95,7 +97,7 @@ public class FireInsurance_ConfirmFragment extends Fragment {
         price.setText(fireInsurance.getPrice());
         postCode.setText(fireInsurance.getPostCode());
         address.setText(fireInsurance.getAddress());
-        area.setText(fireInsurance.getArea());
+        area.setText(fireInsurance.getArea());//
     }
 
     // send inputted info to server
@@ -104,8 +106,8 @@ public class FireInsurance_ConfirmFragment extends Fragment {
 
         fireInsurance.setTrackingCode(generateTrackingCode());
 
-        Call<RequestResponse> api = request.req_fireInsurance(user.getID(), user.getAuth(), fireInsurance.getTypeOfStructure(), fireInsurance.getBuildingType(), fireInsurance.getPrice(),
-                fireInsurance.getArea(), fireInsurance.getLifeTime(), fireInsurance.getPostCode(), fireInsurance.getAddress(), fireInsurance.getTrackingCode());
+        Call<RequestResponse> api = request.req_fireInsurance(user.getAuth(), fireInsurance.getTypeOfStructure(), fireInsurance.getBuildingType(), fireInsurance.getPrice(),
+                fireInsurance.getArea(), fireInsurance.getLifeTime(), fireInsurance.getPostCode(), fireInsurance.getAddress(), getDate(), fireInsurance.getTrackingCode());
 
         api.enqueue(new Callback<RequestResponse>() {
             @Override
@@ -114,6 +116,7 @@ public class FireInsurance_ConfirmFragment extends Fragment {
                 Log.e("check", " " + response.body().getCode());
 
                 if (response.body().getCode().equals("5")) {
+                    ((FireInsuranceActivity) getActivity()).setLevel(4);
                     TrackingCodeFragment trackingCodeFragment = new TrackingCodeFragment(fireInsurance.getTrackingCode());
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.frameLayout, trackingCodeFragment).commit();
@@ -165,5 +168,15 @@ public class FireInsurance_ConfirmFragment extends Fragment {
         }
 
         return Integer.toString(n);
+    }
+
+    //get today date
+    private String getDate() {
+        PersianDate persianDate = new PersianDate();
+        int month = persianDate.getShMonth();
+        int day = persianDate.getShDay();
+        int year = persianDate.getShYear();
+
+        return year + "/" + month + "/" + day;
     }
 }
