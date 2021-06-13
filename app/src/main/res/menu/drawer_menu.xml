@@ -40,6 +40,11 @@
             android:icon="@drawable/contact"
             android:title="ارتباط باما" />
 
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/exit"
+            android:title=" خروج از حساب" />
+
 
     </group>
 
