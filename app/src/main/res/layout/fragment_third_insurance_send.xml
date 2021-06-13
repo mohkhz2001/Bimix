@@ -18,110 +18,230 @@
         app:layout_constraintStart_toStartOf="@+id/guideline28"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/insurancePic"
-            style="@style/Widget.AppCompat.Button.Small"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/on_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:autoSizeTextType="none"
-            android:background="@drawable/bg_choose_pic"
-            android:elevation="5dp"
-            android:enabled="true"
-            android:gravity="center"
-            android:outlineProvider="background"
-            android:text="تصویر بیمه نامه"
-            android:textColor="#fff"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            app:backgroundTint="@null"
-            app:elevation="10dp" />
-
-        <Button
-            android:id="@+id/onCarCard"
-            style="@style/Widget.AppCompat.Button.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:layout_weight="1"
-            android:autoSizeTextType="none"
-            android:background="@drawable/bg_choose_pic"
-            android:elevation="5dp"
-            android:enabled="true"
-            android:gravity="center"
-            android:outlineProvider="background"
-            android:text="عکس روی کارت خودرو"
-            android:textColor="#fff"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            app:backgroundTint="@null"
-            app:elevation="10dp" />
+            android:visibility="visible"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline29"
+            app:layout_constraintStart_toStartOf="@+id/guideline28"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/backCarCard"
-            style="@style/Widget.AppCompat.Button.Small"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline29"
+                app:layout_constraintStart_toStartOf="@+id/guideline28"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/insurancePic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_choose_pic"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:textSize="23dp"
+                    android:textStyle="bold"
+                    app:elevation="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="تصویر بیمه نامه"
+                    android:textColor="#FFFFFF"
+                    android:textSize="23dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:layout_weight="1"
-            android:autoSizeTextType="none"
-            android:background="@drawable/bg_choose_pic"
-            android:elevation="5dp"
-            android:enabled="true"
-            android:gravity="center"
-            android:outlineProvider="background"
-            android:text="عکس پشت کارت خودرو"
-            android:textColor="#fff"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            app:backgroundTint="@null"
-            app:elevation="10dp" />
+            android:visibility="visible"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline29"
+            app:layout_constraintStart_toStartOf="@+id/guideline28"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/onCertificatePic"
-            style="@style/Widget.AppCompat.Button.Small"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline29"
+                app:layout_constraintStart_toStartOf="@+id/guideline28"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/onCarCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_choose_pic"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:textSize="23dp"
+                    android:textStyle="bold"
+                    app:elevation="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text=" تصویر روی کارت خودرو"
+                    android:textColor="#FFFFFF"
+                    android:textSize="23dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:layout_weight="1"
-            android:autoSizeTextType="none"
-            android:background="@drawable/bg_choose_pic"
-            android:elevation="5dp"
-            android:enabled="true"
-            android:gravity="center"
-            android:outlineProvider="background"
-            android:text="عکس روی کارت گواهینامه"
-            android:textColor="#fff"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            app:backgroundTint="@null"
-            app:elevation="10dp" />
+            android:visibility="visible"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline29"
+            app:layout_constraintStart_toStartOf="@+id/guideline28"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/backCertificatePic"
-            style="@style/Widget.AppCompat.Button.Small"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline29"
+                app:layout_constraintStart_toStartOf="@+id/guideline28"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/backCarCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_choose_pic"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:outlineProvider="background"
+                    android:scaleType="fitXY"
+                    app:elevation="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="تصویر پشت کارت خودرو"
+                    android:textColor="#FFFFFF"
+                    android:textSize="23dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:layout_weight="1"
-            android:autoSizeTextType="none"
-            android:background="@drawable/bg_choose_pic"
-            android:elevation="5dp"
-            android:enabled="true"
-            android:gravity="center"
-            android:outlineProvider="background"
-            android:text="عکس پشت کارت گواهینامه"
-            android:textColor="#fff"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            app:backgroundTint="@null"
-            app:elevation="10dp" />
+            android:visibility="visible"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline29"
+            app:layout_constraintStart_toStartOf="@+id/guideline28"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline29"
+                app:layout_constraintStart_toStartOf="@+id/guideline28"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/onCertificatePic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_choose_pic"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:textColor="#fff"
+                    android:textSize="23dp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null"
+                    app:elevation="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text=" تصویر روی کارت گواهینامه"
+                    android:textColor="#FFFFFF"
+                    android:textSize="23dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:visibility="visible"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline29"
+            app:layout_constraintStart_toStartOf="@+id/guideline28"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline29"
+                app:layout_constraintStart_toStartOf="@+id/guideline28"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/backCertificatePic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:autoSizeTextType="none"
+                    android:background="@drawable/bg_choose_pic"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:textColor="#fff"
+                    android:textSize="23dp"
+                    android:textStyle="bold"
+                    app:elevation="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="تصویر پشت کارت گواهینامه"
+                    android:textColor="#FFFFFF"
+                    android:textSize="23dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
 
 
     </LinearLayout>
