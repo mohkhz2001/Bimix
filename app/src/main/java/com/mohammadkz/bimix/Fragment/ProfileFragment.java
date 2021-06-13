@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -58,6 +59,7 @@ public class ProfileFragment extends Fragment {
     TextView text_click, Error;
     ProgressDialog progressDialog;
     TextInputLayout date_layout, idCard_layout;
+    Bitmap img;
 
     public ProfileFragment(String auth) {
         // Required empty public constructor
@@ -106,7 +108,7 @@ public class ProfileFragment extends Fragment {
                 user.setIdCard(idCard.getText().toString());
                 user.setBirthdayDate(birthdayDate.getText().toString());
 
-                if (user.getIdCard().equals("-") && user.getIdCardImage().equals("") && user.getBirthdayDate().equals("-")) {
+                if (user.getIdCard().equals("-") && img == null && user.getBirthdayDate().equals("-")) {
                     progressDialog.dismiss();
                     if (user.getIdCard().equals("-")) {
                         date_layout.setErrorEnabled(true);
@@ -115,10 +117,11 @@ public class ProfileFragment extends Fragment {
                         date_layout.setErrorEnabled(false);
                     }
 
-                    if (user.getIdCardImage().equals("")) {
+                    if (img == null) {
                         Error.setVisibility(View.VISIBLE);
-                    } else
+                    } else {
                         Error.setVisibility(View.GONE);
+                    }
 
 
                     if (user.getBirthdayDate().equals("-")) {
@@ -127,8 +130,10 @@ public class ProfileFragment extends Fragment {
                     } else {
                         idCard_layout.setErrorEnabled(false);
                     }
-
+                    progressDialog.dismiss();
                 } else {
+//                    DownloadImagesTask downloadImagesTask = new DownloadImagesTask();
+//                    user.setIdCardImage(downloadImagesTask.doInBackground(img));
                     sendDate();
                 }
 
@@ -138,11 +143,6 @@ public class ProfileFragment extends Fragment {
         idCardImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                if (user.getIdCardImage() == null) {
-                permission();
-                bottomSheetChooser();
-//                }
 
             }
         });
@@ -160,6 +160,7 @@ public class ProfileFragment extends Fragment {
                 if (!response.body().getName().equals("")) {
                     response.body().setAuth(user.getAuth());
                     user = response.body();
+                    user.setIdCardImage(null); // disable this option
                     setValue(user);
 
                     progressDialog.dismiss();
@@ -183,16 +184,13 @@ public class ProfileFragment extends Fragment {
         name.setText(user.getName());
         name.setText(user.getName());
 
-        if (user.getIdCardImage() != null) {
-            showImage(user.getIdCardImage());
-        }
-
     }
 
     private void sendDate() {
         progressDialog.setMessage("در حال ارسال...");
         progressDialog.show();
-        Call<LoginResponse> update = request.updateUser(user.getAuth(), user.getIdCardImage(), user.getIdCard(), user.getBirthdayDate());
+        Log.e("auth", " " + user.getAuth());
+        Call<LoginResponse> update = request.updateUser(user.getAuth(), "-", user.getIdCard(), user.getBirthdayDate());
 
         update.enqueue(new Callback<LoginResponse>() {
             @Override
@@ -201,138 +199,21 @@ public class ProfileFragment extends Fragment {
                     System.out.println();
                     progressDialog.dismiss();
                     Toast.makeText(getContext(), " اطلاعات شما با موفقیت تغییر کرد ", Toast.LENGTH_LONG).show();
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(getContext(), " اشکال ", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 System.out.println();
+                progressDialog.dismiss();
                 StaticFun.alertDialog_connectionFail(getContext());
             }
         });
     }
 
-    private void showImage(String base64) {
-        byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        idCardImage.setImageBitmap(decodedByte);
-    }
-
-    public void bottomSheetChooser() {
-
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
-        View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_choose_send, (LinearLayout) view.findViewById(R.id.bottomSheetContainer));
-
-        bottomSheetView.findViewById(R.id.camera).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePicture, 0);//zero can be replaced with any action code (called requestCode)
-
-                bottomSheetDialog.dismiss();
-            }
-        });
-
-        bottomSheetView.findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto, 1);//one can be replaced with any action code
-
-                bottomSheetDialog.dismiss();
-
-            }
-        });
-
-        bottomSheetView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.dismiss();
-            }
-        });
-
-        bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.show();
-    }
-
-    // runtime permission
-    private void permission() {
-
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-
-            }
-
-            @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-
-            }
-        };
-
-        TedPermission.with(getContext())
-                .setPermissionListener(permissionListener)
-                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).check();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            // When an Image is picked
-            if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
-
-                // Get the Image from data
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                assert cursor != null;
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                mediaPath = cursor.getString(columnIndex);
-
-                String base64 = getBase64(Uri.parse(mediaPath));
-                user.setIdCardImage(base64);
-                showImage(base64);
 
 
-                cursor.close();
-
-            } else if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
-
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream.toByteArray();
-                String base64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-                user.setIdCardImage(base64);
-                showImage(base64);
-
-            } else {
-                Toast.makeText(getContext(), "You haven't picked Image", Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            e.getMessage();
-            Log.e("error", " " + e.getMessage());
-            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    private String getBase64(Uri uri) {
-        text_click.setVisibility(View.GONE);
-        Bitmap bm = BitmapFactory.decodeFile(uri.toString());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 100, baos); // bm is the bitmap object
-        byte[] b = baos.toByteArray();
-
-        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-        return encodedImage;
-    }
 }
