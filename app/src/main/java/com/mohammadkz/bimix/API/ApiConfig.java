@@ -3,6 +3,7 @@ package com.mohammadkz.bimix.API;
 
 import androidx.cardview.widget.CardView;
 
+import com.mohammadkz.bimix.Model.CheckResult;
 import com.mohammadkz.bimix.Model.HistoryInsuranceResponse;
 import com.mohammadkz.bimix.Model.InsuranceResponse;
 import com.mohammadkz.bimix.Model.LoginResponse;
@@ -28,8 +29,7 @@ public interface ApiConfig {
     @POST("Signup.php")
     Call<LoginResponse> SignUp(@Field("phoneNumber") String phoneNumber,
                                @Field("name") String name,
-                               @Field("password") String password,
-                               @Field("auth") String auth);
+                               @Field("password") String password);
 
     @FormUrlEncoded
     @POST("TrackingCheck.php")
@@ -37,8 +37,7 @@ public interface ApiConfig {
 
     @FormUrlEncoded
     @POST("FireInsurance.php")
-    Call<RequestResponse> req_fireInsurance(@Field("id") String id,
-                                            @Field("userAuth") String userAuth,
+    Call<RequestResponse> req_fireInsurance(@Field("userAuth") String userAuth,
                                             @Field("typeOfStructure") String typeOfStructure,
                                             @Field("buildingType") String buildingType,
                                             @Field("price") String price,
@@ -46,13 +45,13 @@ public interface ApiConfig {
                                             @Field("lifeTime") String lifeTime,
                                             @Field("postCode") String postCode,
                                             @Field("address") String address,
+                                            @Field("date") String date,
                                             @Field("trackingCode") String trackingCode
     );
 
     @FormUrlEncoded
     @POST("getUserInsurance.php")
-    Call<List<InsuranceResponse>> req_getUserInsurance(@Field("id") String id,
-                                                       @Field("auth") String auth
+    Call<List<InsuranceResponse>> req_getUserInsurance(@Field("auth") String auth
 
     );
 
@@ -80,6 +79,12 @@ public interface ApiConfig {
                                              @Field("backCertificate") String backCertificate,
                                              @Field("onCertificate") String onCertificate,
                                              @Field("date") String date
+    );
+
+    @FormUrlEncoded
+    @POST("checkNotification.php")
+    Call<List<CheckResult>> checkResult(
+            @Field("auth") String auth
     );
 
     @FormUrlEncoded
