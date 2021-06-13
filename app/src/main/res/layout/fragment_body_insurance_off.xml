@@ -145,48 +145,7 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/item_for_checkbox"
-            android:gravity="right"
-            android:paddingLeft="12dp"
-            android:paddingTop="10dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="11dp">
 
-            <com.animsh.animatedcheckbox.AnimatedCheckBox
-                android:id="@+id/five"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                app:border_stroke_width="2dp"
-                app:color_checked="#0CD404"
-                app:color_tick="@color/white"
-                app:color_unchecked="@color/white"
-                app:color_unchecked_stroke="#2ABD24"
-                app:small_tick="true"
-                app:tick_stroke_width="1dp" />
-
-            <TextView
-                android:id="@+id/five_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_toLeftOf="@id/five"
-                android:gravity="center"
-                android:text="ویژه خودروهای سواری"
-                android:textColor="#000"
-                android:textSize="15dp" />
-
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -273,6 +232,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.92" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
