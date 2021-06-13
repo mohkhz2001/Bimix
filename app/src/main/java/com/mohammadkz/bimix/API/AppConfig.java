@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppConfig {
     private static Retrofit retrofit;
-    public static final String url = "http://192.168.1.120/insurance/";
+    public static final String url = "http://192.168.1.112/insurance/";
 
     public static Retrofit getRetrofit() {
         if (retrofit == null) {
