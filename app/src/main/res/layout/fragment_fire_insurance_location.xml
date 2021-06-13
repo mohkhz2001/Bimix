@@ -17,9 +17,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_postCode"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -32,10 +33,9 @@
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeColor="#FF9800"
             app:boxStrokeWidth="2dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="17"
             app:endIconMode="clear_text"
             app:endIconTint="#FF9800"
+            app:errorTextColor="#FF0000"
             app:hintEnabled="true"
             app:hintTextColor="#000">
 
@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:focusedByDefault="false"
                 android:inputType="number"
-                android:maxLength="17"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textSize="18dp" />
@@ -53,6 +52,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_address"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,6 +69,7 @@
             app:boxStrokeWidth="2dp"
             app:endIconMode="clear_text"
             app:endIconTint="#FF9800"
+            app:errorTextColor="#ff0000"
             app:hintEnabled="true"
             app:hintTextColor="#000">
 
@@ -80,7 +81,6 @@
                 android:focusedByDefault="false"
                 android:gravity="top"
                 android:inputType="textMultiLine"
-                android:maxLines="6"
                 android:minLines="3"
                 android:singleLine="false"
                 android:textSize="18dp" />
