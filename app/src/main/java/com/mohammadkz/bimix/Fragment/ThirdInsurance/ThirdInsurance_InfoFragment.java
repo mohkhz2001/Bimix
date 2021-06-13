@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,6 @@ import com.mohammadkz.bimix.Fragment.BodyInsurance.BodyInsurance_CoverFragment;
 import com.mohammadkz.bimix.Model.ThirdInsurance;
 import com.mohammadkz.bimix.R;
 
-import adil.dev.lib.materialnumberpicker.dialog.NumberPickerDialog;
 
 
 public class ThirdInsurance_InfoFragment extends Fragment {
@@ -110,10 +110,9 @@ public class ThirdInsurance_InfoFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (checkValues()) {
-                if (true) {
+                if (checkValues()) {
                     ((ThirdInsuranceActivity) getActivity()).setSeekBar(2);
-                    thirdInsurance.setEndDate("1");
+                    thirdInsurance.setEndDate(endDate.getText().toString());
                     thirdInsurance.setInsuranceID(insuranceId.getText().toString());
 
                     ThirdInsurance_sendFragment thirdInsurance_sendFragment = new ThirdInsurance_sendFragment(thirdInsurance);
@@ -131,13 +130,6 @@ public class ThirdInsurance_InfoFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                NumberPickerDialog dialog = new NumberPickerDialog(getContext(), -50, 50, new NumberPickerDialog.NumberPickerCallBack() {
-                    @Override
-                    public void onSelectingValue(int value) {
-                        Toast.makeText(getContext(), "Selected " + String.valueOf(value), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                dialog.show();
 
 
             }
@@ -151,14 +143,15 @@ public class ThirdInsurance_InfoFragment extends Fragment {
         useSpinner.setAdapter(useSpinnerItem);
 
 
-        String[] item_lastInsurance = {"ایران", "کوثر", "ملت", "تجارت", "البرز", "آسیا", "دی", "دانا", "ما", "سرمد", "سامان", "رازی", "دی", "سینا", "معلم", "پاسارگاد", "نوین"};
+        String[] item_lastInsurance = {"ایران", "کوثر", "ملت", "البرز", "آسیا", "دی", "دانا", "ما", "سرمد", "سامان", "رازی", "دی", "سینا", "معلم", "پاسارگاد", "نوین",
+                "پارسیان", "کارآفرین", "آرمان", "میهن", "تعاون", "آسماری", "تجارت نو"};
         ArrayAdapter<String> lastInsuranceSpinnerItem = new ArrayAdapter<>(getContext(), R.layout.spinner_item, item_lastInsurance);
         lastCompany.setAdapter(lastInsuranceSpinnerItem);
 
     }
 
     private boolean checkValues() {
-        if (insuranceId.getText() == null || thirdInsurance.getUseFor() == null || thirdInsurance.getLastCompany() == null) {
+        if (insuranceId.getText().length() < 1 || endDate.getText().length() < 1 || thirdInsurance.getUseFor() == null || thirdInsurance.getLastCompany() == null) {
             return false;
         } else
             return true;
@@ -169,13 +162,20 @@ public class ThirdInsurance_InfoFragment extends Fragment {
             useSpinner_layout.setError("یک مورد را انتخاب کنید");
             useSpinner_layout.setErrorEnabled(true);
         }
+
         if (thirdInsurance.getLastCompany() == null) {
             lastCompany_layout.setError("یک مورد را انتخاب کنید");
             lastCompany_layout.setErrorEnabled(true);
         }
-        if (insuranceId.getTextSize() > 0) {
+
+        if (insuranceId.getText().length() < 2) {
             insuranceID_layout.setError("این قسمت نمی تواند خالی باشد");
             insuranceID_layout.setErrorEnabled(true);
+        }
+
+        if (endDate.getText().length() < 2) {
+            endDate_layout.setError("این قسمت نمی تواند خالی باشد");
+            endDate_layout.setErrorEnabled(true);
         }
     }
 
