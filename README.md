@@ -1,3 +1,7 @@
+
+# Introduce
+this is Android application about insurance that help agent to save customer, time and etc.
+
 # Screen shot
 ![12](https://user-images.githubusercontent.com/56700076/143734129-41cb5e8a-12cb-4f27-8a85-48ab20a734cd.jpeg)
 ![11](https://user-images.githubusercontent.com/56700076/143734132-231228b1-da83-4bfa-94b2-ed6d43ee6fda.jpeg)
@@ -14,5 +18,3 @@
 ![0](https://user-images.githubusercontent.com/56700076/143734146-5f244921-58e1-48e1-af86-4fa71fc9d812.jpeg)
 ![4](https://user-images.githubusercontent.com/56700076/143734147-79df3429-c846-4c41-a772-c713410a1178.jpeg)
 
-# Introduce
-this is Android application about insurance that help agent to save customer, time and etc.
